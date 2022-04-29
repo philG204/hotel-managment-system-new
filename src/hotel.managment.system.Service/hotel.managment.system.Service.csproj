@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\hotel-managment-system\hotel.managment.system.csproj" />
+    <ProjectReference Include="..\hotel.managment.system.Data.DB\hotel.managment.system.Data.DB.csproj" />
+  </ItemGroup>
+
+</Project>
