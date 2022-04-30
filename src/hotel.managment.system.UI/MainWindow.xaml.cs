@@ -23,6 +23,10 @@ namespace hotel.managment.system.UI
         public MainWindow()
         {
             InitializeComponent();
+            ViewModelMainWindow vm = new ViewModelMainWindow();
+            this.DataContext = vm;
+           
+            }
+            
         }
-    }
 }
