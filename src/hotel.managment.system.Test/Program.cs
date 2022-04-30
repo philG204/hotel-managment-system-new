@@ -2,6 +2,7 @@
 using hotel_managment_system;
 using hotel_managment_system.Models;
 using System;
+using System.Collections.Generic;
 
 namespace hotel.managment.system.Test
 {
@@ -13,7 +14,7 @@ namespace hotel.managment.system.Test
 
             Receipt receipt = new Receipt();
 
-            receipt.ReceiptID = 3;
+            receipt.ReceiptID = 6;
 
             Customer customer = new Customer();
             customer.CustomerID = 1;
@@ -59,8 +60,8 @@ namespace hotel.managment.system.Test
 
             TotalMealCosts totelMealCost = new TotalMealCosts();
 
-            /**
-            for (int i = 1; i < 4; i++)
+
+            for (int i = 1; i < 1; i++)
             {
                 Meal meal = new Meal();
                 meal.MealID = i;
@@ -80,11 +81,11 @@ namespace hotel.managment.system.Test
             totelMealCost.discount = 0;
 
             receipt.TotalMealCosts = totelMealCost;
-            **/
+
 
             TotalTreatmentCosts totalTreatmentCost = new TotalTreatmentCosts();
 
-            for (int i = 1; i < 3; i++)
+            for (int i = 1; i < 0; i++)
             {
                 Treatment treatment = new Treatment();
                 treatment.TreatmentID = i;
@@ -105,6 +106,7 @@ namespace hotel.managment.system.Test
 
             receipt.TotalTreatmentCosts = totalTreatmentCost;
 
+            /**
             if (receiptService.Save(receipt))
             {
                 Console.WriteLine("Object saved successfully");
@@ -114,6 +116,39 @@ namespace hotel.managment.system.Test
                 Console.WriteLine("Somethiing went wrong");
                 Console.ReadKey();
             }
+            **/
+
+            List<Receipt> receipts = receiptService.GetAll();
+
+            foreach (Receipt r in receipts)
+            {
+                Console.WriteLine(r.ReceiptID.ToString() + r);
+            }
+            
+            int n = 5;
+            Console.WriteLine("\n");
+            Receipt R = receiptService.Get(n);
+            if (R != null)
+            {
+                Console.WriteLine(R.ReceiptID.ToString() + R);
+            }
+            else
+            {
+                Console.WriteLine("Entry dosen't exist");
+            }
+
+            Receipt receipt1 = new Receipt();
+            receipt1.ReceiptID = 5;
+
+            if (receiptService.Delete(receipt1))
+            {
+                Console.WriteLine("Entry deleted successfully");
+            }
+            else
+            {
+                Console.WriteLine("Somethin wen't wrong");
+            }
+            
         }
     }
 }
