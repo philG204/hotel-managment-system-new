@@ -375,7 +375,7 @@ namespace hotel.managment.system.Data.DB
 
                     if (aDR.HasRows)
                     {
-                        OleDbCommand cmd4 = new OleDbCommand("SELECT * FROM `Aktion` WHERE `Aktionsnummer` = (SELECT `Aktionsnummer` FROM `Buchung_Aktion` WHERE `Buchungsnummer` = ?)", connection);
+                        OleDbCommand cmd4 = new OleDbCommand("SELECT * FROM Aktion INNER JOIN Buchung_Aktion ON Aktion.Aktionsnummer = Buchung_Aktion.Aktionsnummer WHERE `Kassenbelegnummer` =", connection);
                         cmd4.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                         var ADr = cmd4.ExecuteReader();
@@ -393,7 +393,7 @@ namespace hotel.managment.system.Data.DB
 
                     SubRoom subRoom = new SubRoom();
 
-                    OleDbCommand cmd5 = new OleDbCommand("SELECT * FROM `Zimmer` WHERE `Zimmernummer` = (SELECT `Zimmernummer` FROM `Buchung_Zimmer` WHERE `Buchungsnummer` = ?)", connection);
+                    OleDbCommand cmd5 = new OleDbCommand("SELECT * FROM `Zimmer` INNER JOIN `Buchung_Zimmer` WHERE `Buchungsnummer` = ?", connection);
                     cmd5.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var RDr = cmd5.ExecuteReader();
@@ -403,7 +403,7 @@ namespace hotel.managment.system.Data.DB
                         Room room = new Room();
                         room.RoomID = Convert.ToInt32(RDr.GetValue(0));
 
-                        OleDbCommand cmd6 = new OleDbCommand("SELECT * FROM `Zimmer_Betten` WHERE `Bettnummer` = (SELECT `Bettnummer` FROM `Zimmer_Bettzuteilung` WHERE `Zimmernummer` = ?)", connection);
+                        OleDbCommand cmd6 = new OleDbCommand("SELECT * FROM `Zimmer_Betten` INNER JOIN `Zimmer_Bettzuteilung` WHERE `Zimmernummer` = ?", connection);
                         cmd6.Parameters.Add(new OleDbParameter { Value = RDr.GetValue(0) });
 
                         var Bdr = cmd6.ExecuteReader();
@@ -425,7 +425,7 @@ namespace hotel.managment.system.Data.DB
                         room.Lightning = Convert.ToString(RDr.GetValue(9));
                         room.Size = Convert.ToByte(RDr.GetValue(3));
 
-                        OleDbCommand cmd7 = new OleDbCommand("SELECT * FROM `Ausstatungsgegenstaende` WHERE `Ausstatungsnummer` = (SELECT `Ausstatungsnummer` FROM `Buchung_Zimmer` WHERE `Buchungsnummer` = ?)", connection);
+                        OleDbCommand cmd7 = new OleDbCommand("SELECT * FROM `Ausstatungsgegenstaende` INNER JOIN `Buchung_Zimmer` WHERE `Buchungsnummer` = ?", connection);
                         cmd7.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                         var EDDr = cmd7.ExecuteReader();
@@ -453,7 +453,7 @@ namespace hotel.managment.system.Data.DB
 
                     TotalMealCosts totalMealCost = new TotalMealCosts();
 
-                    OleDbCommand cmd9 = new OleDbCommand("SELECT * FROM `Speisen` WHERE `Speisennummer` = (SELECT `Speisennummer` FROM `Buchung_Hotel_Speisen` WHERE `Buchungsnummer` = ?)", connection);
+                    OleDbCommand cmd9 = new OleDbCommand("SELECT * FROM `Speisen` INNER JOIN `Buchung_Hotel_Speisen` WHERE `Buchungsnummer` = ?", connection);
                     cmd9.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var MDr = cmd9.ExecuteReader();
@@ -466,7 +466,7 @@ namespace hotel.managment.system.Data.DB
                             meal.MealID = Convert.ToInt32(MDr.GetValue(0));
                             meal.Name = Convert.ToString(MDr.GetValue(1));
 
-                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` WHERE `Rabattnummer` = (SELECT `Rabattnummer` FROM `Speisen` WHERE `Speisennummer` = ?)", connection);
+                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` INNE JOIN `Speisen` WHERE `Speisennummer` = ?", connection);
                             cmd10.Parameters.Add(new OleDbParameter { Value = MDr.GetValue(0) });
 
                             var DDr = cmd10.ExecuteReader();
@@ -492,7 +492,7 @@ namespace hotel.managment.system.Data.DB
                         booking.TotalMealCosts = totalMealCost;
                     }                   
 
-                    OleDbCommand cmd12 = new OleDbCommand("SELECT * FROM `Behandlung` WHERE `Behandlungsnummer` = (SELECT `Behandlungsnummer` FROM `Buchung_Hotel_Behandlung` WHERE `Buchungsnummer` = ?)", connection);
+                    OleDbCommand cmd12 = new OleDbCommand("SELECT * FROM `Behandlung` INNER JOIN `Buchung_Hotel_Behandlung` WHERE `Buchungsnummer` = ?", connection);
                     cmd12.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var TDr = cmd12.ExecuteReader();
@@ -508,7 +508,7 @@ namespace hotel.managment.system.Data.DB
                             treatment.TreatmentID = Convert.ToInt32(TDr.GetValue(0));
                             treatment.TreatmentName = Convert.ToString(TDr.GetValue(1));
 
-                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` WHERE `Rabattnummer` = (SELECT `Rabattnummer` FROM `Behandlung` WHERE `Behandlungsnummer` = ?)", connection);
+                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` INNER JOIN `Behandlung` WHERE `Behandlungsnummer` = ?", connection);
                             cmd10.Parameters.Add(new OleDbParameter { Value = TDr.GetValue(0) });
 
                             var DDr = cmd10.ExecuteReader();
@@ -538,7 +538,7 @@ namespace hotel.managment.system.Data.DB
 
                     SubEmployee subEmployee = new SubEmployee();
 
-                    OleDbCommand cmd14 = new OleDbCommand("SELECT * FROM `Mitarbeiter` WHERE `Mitarbeiternummer` = (SELECT `Mitarbeiternummer` FROM `Buchung_Mitarbeiter` WHERE `Buchungsnummer` = ?)", connection);
+                    OleDbCommand cmd14 = new OleDbCommand("SELECT * FROM `Mitarbeiter` INNER JOIN `Buchung_Mitarbeiter` WHERE `Buchungsnummer` = ?", connection);
                     cmd14.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var EDr = cmd14.ExecuteReader();
