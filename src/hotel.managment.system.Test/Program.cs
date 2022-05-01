@@ -85,7 +85,7 @@ namespace hotel.managment.system.Test
 
             TotalTreatmentCosts totalTreatmentCost = new TotalTreatmentCosts();
 
-            for (int i = 1; i < 0; i++)
+            for (int i = 1; i < 2; i++)
             {
                 Treatment treatment = new Treatment();
                 treatment.TreatmentID = i;
@@ -137,8 +137,9 @@ namespace hotel.managment.system.Test
                 Console.WriteLine("Entry dosen't exist");
             }
 
+            /**
             Receipt receipt1 = new Receipt();
-            receipt1.ReceiptID = 5;
+            receipt1.ReceiptID = 6;
 
             if (receiptService.Delete(receipt1))
             {
@@ -146,9 +147,9 @@ namespace hotel.managment.system.Test
             }
             else
             {
-                Console.WriteLine("Somethin wen't wrong");
+                Console.WriteLine("Something wen't wrong");
             }
-            
+            **/
         }
     }
 }
