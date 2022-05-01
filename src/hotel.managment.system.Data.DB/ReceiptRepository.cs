@@ -12,6 +12,84 @@ namespace hotel.managment.system.Data.DB
 {
     public class ReceiptRepository : IReceiptRepository
     {
+        public bool Delete(Receipt obj)
+        {
+            try
+            {
+                OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
+                connection.Open();
+
+                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Kassenbeleg` WHERE `Kassenbelegnummer`= ?", connection);
+                CheckCmd.Parameters.Add(new OleDbParameter { Value = obj.ReceiptID });
+
+                var CheckDr = CheckCmd.ExecuteReader();
+
+                if (CheckDr.HasRows != false)
+                {
+                    OleDbCommand cmd1 = new OleDbCommand("DELETE FROM `Kassenbeleg` WHERE `Kassenbelegnummer`= ?", connection);
+                    cmd1.Parameters.Add(new OleDbParameter { Value = obj.ReceiptID });
+
+                    cmd1.ExecuteNonQuery();
+
+                    OleDbCommand cmd2 = new OleDbCommand("DELETE FROM `Kassenbeleg` WHERE `Kassenbelegnummer`= ?", connection);
+                    cmd2.Parameters.Add(new OleDbParameter { Value = obj.ReceiptID });
+
+                    cmd2.ExecuteNonQuery();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return false;   
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
+                connection.Open();
+
+                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Kassenbeleg` WHERE `Kassenbelegnummer`= ?", connection);
+                CheckCmd.Parameters.Add(new OleDbParameter { Value = id });
+
+                var CheckDr = CheckCmd.ExecuteReader();
+
+                if (CheckDr.HasRows != false)
+                {
+                    OleDbCommand cmd1 = new OleDbCommand("DELETE FROM `Kassenbeleg` WHERE `Kassenbelegnummer`= ?", connection);
+                    cmd1.Parameters.Add(new OleDbParameter { Value = id });
+
+                    cmd1.ExecuteNonQuery();
+
+                    OleDbCommand cmd2 = new OleDbCommand("DELETE FROM `Kassenbeleg` WHERE `Kassenbelegnummer`= ?", connection);
+                    cmd2.Parameters.Add(new OleDbParameter { Value = id });
+
+                    cmd2.ExecuteNonQuery();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return false;
+            }
+        }
+
         public Receipt Get(int TId)
         { 
             try
