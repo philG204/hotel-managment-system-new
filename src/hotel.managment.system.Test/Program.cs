@@ -10,6 +10,7 @@ namespace hotel.managment.system.Test
     {
         static void Main(string[] args)
         {
+            /**
             ReceiptService receiptService = new ReceiptService();
 
             Receipt receipt = new Receipt();
@@ -106,7 +107,7 @@ namespace hotel.managment.system.Test
 
             receipt.TotalTreatmentCosts = totalTreatmentCost;
 
-            /**
+            
             if (receiptService.Save(receipt))
             {
                 Console.WriteLine("Object saved successfully");
@@ -116,7 +117,7 @@ namespace hotel.managment.system.Test
                 Console.WriteLine("Somethiing went wrong");
                 Console.ReadKey();
             }
-            **/
+            
 
             List<Receipt> receipts = receiptService.GetAll();
 
@@ -137,7 +138,7 @@ namespace hotel.managment.system.Test
                 Console.WriteLine("Entry dosen't exist");
             }
 
-            /**
+            
             Receipt receipt1 = new Receipt();
             receipt1.ReceiptID = 6;
 
@@ -149,7 +150,110 @@ namespace hotel.managment.system.Test
             {
                 Console.WriteLine("Something wen't wrong");
             }
+            
+
+            CustomerService customerService = new CustomerService();
+            
+            
+            Customer customer = new Customer();
+            customer.CustomerID = 9;
+            customer.Name = "Name9";
+            customer.Surname = "Surename9";
+            customer.Street = "Street9";
+            customer.City = "City9";
+            customer.Email = "email9.@email.com";
+            customer.Vocation = "Vocation9";
+            customer.MaritalStatus = "maritalStatus9";
+            customer.KindOfTravaler = "KindOfTravaler9";
+            customer.Birthday = new DateTime();
+            customer.EducationalStatus = "EducationalStatus9";
+            customer.HouseNumber = "9";
+            customer.PhoneNumber = 1234567;
+            customer.Gender = "gender9";
+            customer.PostalCode = 1234;
+            
+            if (customerService.Save(customer))
+            {
+                Console.WriteLine("Object saved successfully");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+                Console.ReadKey();
+            }
+            
+            List<Customer> customers = customerService.GetAll();
+
+            foreach (Customer c in customers)
+            {
+                Console.WriteLine(c.CustomerID + " " + c);
+            }
+
+            Console.WriteLine("\n");
+
+            Customer customer1 = customerService.Get(6);
+            
+            if (customer1 == null)
+            {
+                Console.WriteLine("Entry not found");
+            }
+            else
+            {
+                Console.WriteLine(customer1.CustomerID + " " + customer1);
+            }
+
+
+            
+            Customer customer2 = new Customer();
+            customer2.CustomerID = 8;
+
+            if (customerService.Delete(customer2))
+            {
+                Console.WriteLine("Entry sucessfully deleted");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
             **/
+
+            EmployeeService employeeService = new EmployeeService();
+
+            
+            Employee employee = new Employee();
+
+            employee.EmployeeID = 3;
+            employee.Name = "Name3";
+            employee.Surename = "Surename3";
+            employee.Street = "street3";
+            employee.Housenumber = 3;
+            employee.PhoneNumber = 1234;
+            employee.City = "city3";
+            employee.Email = "email3@.com";
+            employee.PostalCode = 123145;
+            employee.Password = "passwwort1234";
+
+
+            if (employeeService.Save(employee))
+            {
+                Console.WriteLine("Object successfully saved");
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
+            }
+
+            List<Employee> employees = employeeService.GetAll();
+
+            foreach (Employee e in employees)
+            {
+                Console.WriteLine(e.EmployeeID + " " + e);
+            }
+
+            Console.WriteLine("\n");
+            Employee employee2 = employeeService.Get(1);
+            Console.WriteLine(employee2.EmployeeID + " " + employee2);
+
         }
     }
 }
