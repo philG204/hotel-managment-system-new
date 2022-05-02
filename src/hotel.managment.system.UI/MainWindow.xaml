@@ -25,7 +25,7 @@
                 <RowDefinition Height="200"/>
                 <RowDefinition Height="120"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="2" Content="Abbrechnung" Command="{Binding Invoive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
+            <Button Grid.Row="2" Content="Abbrechnung" Command="{Binding ShowUserControl1Command, Mode=TwoWay}" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
             <Button Grid.Row="3" Content="Statistik" FontSize="25" BorderBrush="#FF3A306B" Background="#FF3A306B" Foreground="White"/>
             <Button Grid.Row="4" Content="Stammdaten" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
             <Button Grid.Row="6" Content="Abmelden" FontSize="25" Background="#FF3A306B" BorderBrush="#FF3A306B" Foreground="White"/>
@@ -37,8 +37,8 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <Grid Visibility="{Binding IsSelectControlCollapsed, Converter={StaticResource BoolToVis}}">
-                <vsc:UserControl1 />
+            <Grid Visibility="{Binding IsSelectControlCollapsed, Mode=OneWay, Converter={StaticResource BoolToVis}}">
+                <vsc:BookingMask />
             </Grid>
         </Grid>
     </Grid>

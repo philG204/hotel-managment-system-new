@@ -5,8 +5,173 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:hotel.managment.system.UI.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Content="Zurück" FontSize="36"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="2">
+                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Content="Speichern" FontSize="36"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" Margin="573.4,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="133.3"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.ColumnSpan="2" Margin="0,80,0,0" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="1" Grid.Row="0">
+                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <ComboBox/>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="2">
+                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="3">
+                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="0">
+                        <TextBlock Text="Gesamtgetrag:" Foreground="White" FontSize="18" Margin="0,0,0,0"/>
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="1">
+                        <TextBlock Text="Actionspreis:" Foreground="White" FontSize="18"/>
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <TextBlock Text="MwSt 19% :" Foreground="White" FontSize="18"/>
+                    </Grid>
+                    <Grid Grid.Column="0" Grid.Row="3">
+                        <TextBlock Text="Bruttopreis :" Foreground="White" FontSize="18"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="0" Grid.Row="0" Width="1720" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="235.02"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,381,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition Width="240"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <TextBlock Text="Mitarbeiter" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Kunde" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="0" Grid.Column="1">
+                            <ComboBox/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <ComboBox/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <TextBlock Text="Anreise" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0">
+                            <TextBlock Text="Abreise" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <DatePicker/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="1">
+                            <DatePicker/>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Zimmer" FontSize="36"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Restaurant" FontSize="36"/>
+                        </Grid>
+                        <Grid Grid.Row="2">
+                            <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Spa" FontSize="36"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                
+                <Grid/>
+            </Grid>
+        </Grid>
+
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="37*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid Background="#FF201A49" Grid.ColumnSpan="2">
+
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

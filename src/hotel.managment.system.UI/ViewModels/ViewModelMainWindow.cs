@@ -15,7 +15,7 @@ namespace hotel.managment.system.UI
     {
         RelayCommand _SelectingInvoive;
         RelayCommand _ShowSelectingControlCommand;
-        private bool _IsUserControl1Collapsed;
+        private bool _IsUserControl1Collapsed = true;
 
         //public RelayCommand 
         public RelayCommand ShowUserControl1Command
@@ -24,9 +24,17 @@ namespace hotel.managment.system.UI
             {
                 if (_ShowSelectingControlCommand == null)
                 {
-                    _ShowSelectingControlCommand = new RelayCommand(() => ShowSelectingControl());
+                    _ShowSelectingControlCommand = new RelayCommand(() => ChangeValue());
                 }
                 return _ShowSelectingControlCommand;
+            }
+            set
+            {
+                if (_ShowSelectingControlCommand == null)
+                {
+                    _ShowSelectingControlCommand = new RelayCommand(() => ChangeValue());
+                }
+                _ShowSelectingControlCommand = value;
             }
         }
 
@@ -41,10 +49,6 @@ namespace hotel.managment.system.UI
                 _IsUserControl1Collapsed = false;
             }
         }
-        public void ShowSelectingControl()
-        {
-            _IsUserControl1Collapsed = true;
-        }
 
         public bool IsSelectControlCollapsed
         {
@@ -52,8 +56,11 @@ namespace hotel.managment.system.UI
             {
                 return _IsUserControl1Collapsed;
             }
+
+            set
+            {
+                _IsUserControl1Collapsed = value;
+            }
         }
-
-
     }
 }
