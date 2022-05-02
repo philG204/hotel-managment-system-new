@@ -23,6 +23,11 @@ namespace hotel.managment.system.Data.DB
 
                 cmd.ExecuteNonQuery();
 
+                OleDbCommand cmd2 = new OleDbCommand("DELETE FROM `Kunde` WHERE `Kundennummer` = ?", connection);
+                cmd2.Parameters.Add(new OleDbParameter { Value = obj.CustomerID });
+
+                cmd2.ExecuteNonQuery();
+
                 return true;
             }
             catch (Exception ex)
@@ -43,6 +48,11 @@ namespace hotel.managment.system.Data.DB
                 cmd.Parameters.Add(new OleDbParameter { Value = id});
 
                 cmd.ExecuteNonQuery();
+
+                OleDbCommand cmd2 = new OleDbCommand("DELETE FROM `Kunde` WHERE `Kundennummer` = ?", connection);
+                cmd2.Parameters.Add(new OleDbParameter { Value = id });
+
+                cmd2.ExecuteNonQuery();
 
                 return true;
             }          
@@ -66,25 +76,32 @@ namespace hotel.managment.system.Data.DB
 
                 var dr = cmd.ExecuteReader();
 
-                dr.Read();
-                
-                customer.CustomerID = Convert.ToInt32(dr.GetValue(0));
-                customer.Name = Convert.ToString(dr.GetValue(1));
-                customer.Surname = Convert.ToString(dr.GetValue(2));
-                customer.Street = Convert.ToString(dr.GetValue(3));
-                customer.HouseNumber = Convert.ToString(dr.GetValue(4));
-                customer.PostalCode = Convert.ToInt64(dr.GetValue(5));
-                customer.City = Convert.ToString(dr.GetValue(6));
-                customer.KindOfTravaler = Convert.ToString(dr.GetValue(7));
-                customer.PhoneNumber = Convert.ToInt64(dr.GetValue(8));
-                customer.Email = Convert.ToString(dr.GetValue(9));
-                customer.Birthday = Convert.ToDateTime(dr.GetValue(10));
-                customer.Gender = Convert.ToString(dr.GetValue(11));
-                customer.MaritalStatus = Convert.ToString(dr.GetValue(12));
-                customer.EducationalStatus = Convert.ToString(dr.GetValue(13));
-                customer.Vocation = Convert.ToString(dr.GetValue(14));
+                if (dr.HasRows != false)
+                {
+                    dr.Read();
 
-                return customer;
+                    customer.CustomerID = Convert.ToInt32(dr.GetValue(0));
+                    customer.Name = Convert.ToString(dr.GetValue(1));
+                    customer.Surname = Convert.ToString(dr.GetValue(2));
+                    customer.Street = Convert.ToString(dr.GetValue(3));
+                    customer.HouseNumber = Convert.ToString(dr.GetValue(4));
+                    customer.PostalCode = Convert.ToInt64(dr.GetValue(5));
+                    customer.City = Convert.ToString(dr.GetValue(6));
+                    customer.KindOfTravaler = Convert.ToString(dr.GetValue(7));
+                    customer.PhoneNumber = Convert.ToInt64(dr.GetValue(8));
+                    customer.Email = Convert.ToString(dr.GetValue(9));
+                    customer.Birthday = Convert.ToDateTime(dr.GetValue(10));
+                    customer.Gender = Convert.ToString(dr.GetValue(11));
+                    customer.MaritalStatus = Convert.ToString(dr.GetValue(12));
+                    customer.EducationalStatus = Convert.ToString(dr.GetValue(13));
+                    customer.Vocation = Convert.ToString(dr.GetValue(14));
+
+                    return customer;
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
@@ -145,10 +162,11 @@ namespace hotel.managment.system.Data.DB
 
                 var CheckDr = CheckCmd.ExecuteReader();
 
-                if (CheckDr.HasRows != false)
-                {
-                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Kunde` (`Kundennummer`, `Vorname`, `Nachname`, `Straße`, `Hausnummer`, `Postleitzahl`, `Wohnort`, `Ast_Reisender`, `Telefonnummer`, `E-Mail`, `Geburtstag`, `Geschlecht`, `Familienstand`, `Bildungstand`, `Berufung`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", connection);
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.CustomerID});
+                if (CheckDr.HasRows == false)
+                {          
+
+                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Kunde` (`Kundennummer`, `Vorname`, `Nachname`, `Straße`, `Hausnummer`, `Postleitzahl`, `Wohnort`, `Art_Reisender`, `Telefonnummer`, `E-Mail`, `Geburtstag`, `Geschlecht`, `Familienstand`, `Bildungsstand`, `Berufung`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", connection);
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.CustomerID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Name });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Surname });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Street });
@@ -165,6 +183,9 @@ namespace hotel.managment.system.Data.DB
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Vocation });
 
                     cmd.ExecuteNonQuery();
+
+                    OleDbCommand Cmd1 = new OleDbCommand("SELECT * FROM `Kunde` ", connection);
+                    Cmd1.ExecuteReader();
 
                     return true;
                 }

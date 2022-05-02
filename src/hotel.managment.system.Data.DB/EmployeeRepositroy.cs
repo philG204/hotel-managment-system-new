@@ -85,7 +85,7 @@ namespace hotel.managment.system.Data.DB
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Kunde` WHERE `Kundennummer` = ?", connection);
+                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Mitarbeiter` WHERE `Mitarbeiternummer` = ?", connection);
                 cmd.Parameters.Add(new OleDbParameter { Value = TId });
 
                 var dr = cmd.ExecuteReader();
@@ -119,7 +119,7 @@ namespace hotel.managment.system.Data.DB
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Kunde`", connection);
+                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Mitarbeiter`", connection);
 
                 var dr = cmd.ExecuteReader();
 
@@ -133,7 +133,7 @@ namespace hotel.managment.system.Data.DB
                     employee.Housenumber = Convert.ToInt32(dr.GetValue(4));
                     employee.PostalCode = Convert.ToInt64(dr.GetValue(5));
                     employee.City = Convert.ToString(dr.GetValue(6));
-                    employee.PhoneNumber = Convert.ToInt64(dr.GetValue(7));
+                    employee.PhoneNumber = Convert.ToInt32(dr.GetValue(7));
                     employee.Email = Convert.ToString(dr.GetValue(8));
                     employee.Password = Convert.ToString(dr.GetValue(9));
 
@@ -159,8 +159,9 @@ namespace hotel.managment.system.Data.DB
 
                 var CheckDr = CheckCmd.ExecuteReader();
 
-                if (CheckDr.HasRows != false)
-                {
+                if (CheckDr.HasRows == false)
+                {                                     
+
                     OleDbCommand cmd = new OleDbCommand("INSERT INTO `Mitarbeiter` (`Mitarbeiternummer`, `Vorname`, `Nachname`, `Straße`, `Hausnummer`, `Postleitzahl`, `Wohnort`, `Telefonnummer`, `E-Mail`, `Passwort`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", connection);
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.EmployeeID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Name });
@@ -174,6 +175,9 @@ namespace hotel.managment.system.Data.DB
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Password });
 
                     cmd.ExecuteNonQuery();
+
+                    OleDbCommand Cmd1 = new OleDbCommand("SELECT * FROM `Mitarbeiter` ", connection);
+                    Cmd1.ExecuteReader();
 
                     return true;
                 }
