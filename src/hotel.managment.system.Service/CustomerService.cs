@@ -11,7 +11,8 @@ namespace hotel.managment.system.Service
 {
     public class CustomerService : ICustomerService
     {
-        private readonly CustomerRepository customerRepository;
+        private readonly CustomerRepository customerRepository = new CustomerRepository();
+
         public bool Delete(Customer obj) => customerRepository.Delete(obj); 
 
         public bool Delete(int id) => customerRepository.Delete(id);    

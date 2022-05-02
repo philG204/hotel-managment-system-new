@@ -11,7 +11,7 @@ namespace hotel.managment.system.Service
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly EmployeeRepositroy employeeRepositroy;
+        private readonly EmployeeRepositroy employeeRepositroy = new EmployeeRepositroy();
 
         public bool Delete(Employee obj) => employeeRepositroy.Delete(obj);
 
@@ -22,10 +22,10 @@ namespace hotel.managment.system.Service
         public List<Employee> GetAll() => employeeRepositroy.GetAll();
 
         public bool Save(Employee obj) => employeeRepositroy.Save(obj);
-
+     
         public string EncryptPassword(string password)
         {
-            throw new NotImplementedException;
+            throw new NotImplementedException();
         }
     }
 }
