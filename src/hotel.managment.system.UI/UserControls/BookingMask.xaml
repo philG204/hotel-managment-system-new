@@ -95,7 +95,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -156,13 +156,42 @@
                             <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Spa" FontSize="36"/>
                         </Grid>
                     </Grid>
+                    <Grid Grid.Column="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock Text="Buchungbeglichen: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.Row="0">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <CheckBox HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <ComboBox/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Frühstücksauswahl: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <ComboBox/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <TextBlock Text="Zahlungsart: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+                        </Grid>
+                    </Grid>
                 </Grid>
-                
+
                 <Grid/>
             </Grid>
         </Grid>
-
-
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
