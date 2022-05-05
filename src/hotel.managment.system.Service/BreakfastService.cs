@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace hotel.managment.system.Service
 {
-    internal class BreakfastService : IBreakfastService
+    public class BreakfastService : IBreakfastService
     {
         private readonly BreakfastRepository breakfastRepository = new BreakfastRepository();
 
