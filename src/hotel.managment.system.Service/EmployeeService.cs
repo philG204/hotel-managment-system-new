@@ -3,6 +3,7 @@ using hotel_managment_system.Models;
 using hotel_managment_system_v2.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace hotel.managment.system.Service
 
         public Employee Get(int TId) => employeeRepositroy.Get(TId);
 
-        public List<Employee> GetAll() => employeeRepositroy.GetAll();
+        public ObservableCollection<Employee> GetAll() => employeeRepositroy.GetAll();
 
         public bool Save(Employee obj) => employeeRepositroy.Save(obj);
      

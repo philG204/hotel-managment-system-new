@@ -1,6 +1,7 @@
 ﻿using hotel.managment.system.Data.DB;
 using hotel_managment_system;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace hotel.managment.system.Service
 {
@@ -14,10 +15,10 @@ namespace hotel.managment.system.Service
 
         public Booking Get(int TId) => bookingRepository.Get(TId);
 
-        public List<Booking> GetAll() => bookingRepository.GetAll();
+        public ObservableCollection<Booking> GetAll() => bookingRepository.GetAll();
 
         public bool Save(Booking obj) => bookingRepository.Save(obj);
 
-        List<Booking> IBookingService.GetAll() => bookingRepository.GetAll();
+        ObservableCollection<Booking> IBookingService.GetAll() => bookingRepository.GetAll();
     }
 }

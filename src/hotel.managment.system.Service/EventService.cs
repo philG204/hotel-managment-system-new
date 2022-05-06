@@ -3,6 +3,7 @@ using hotel_managment_system;
 using hotel_managment_system_v2.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace hotel.managment.system.Service
 
         public Event Get(int TId) => eventRepository.Get(TId);
 
-        public List<Event> GetAll() => eventRepository.GetAll();
+        public ObservableCollection<Event> GetAll() => eventRepository.GetAll();
 
         public bool Save(Event obj) => eventRepository.Save(obj);
     }

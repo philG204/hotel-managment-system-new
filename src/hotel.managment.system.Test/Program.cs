@@ -3,6 +3,7 @@ using hotel_managment_system;
 using hotel_managment_system.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace hotel.managment.system.Test
 {
@@ -243,7 +244,7 @@ namespace hotel.managment.system.Test
                 Console.WriteLine("Something went wrong");
             }
 
-            List<Employee> employees = employeeService.GetAll();
+            ObservableCollection<Employee> employees = employeeService.GetAll();
 
             foreach (Employee e in employees)
             {

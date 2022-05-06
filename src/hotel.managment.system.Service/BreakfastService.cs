@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace hotel.managment.system.Service
 {
@@ -19,7 +20,7 @@ namespace hotel.managment.system.Service
 
         public Breakfast Get(int TId) => breakfastRepository.Get(TId);  
 
-        public List<Breakfast> GetAll() => breakfastRepository.GetAll();    
+        public ObservableCollection<Breakfast> GetAll() => breakfastRepository.GetAll();    
 
         public bool Save(Breakfast obj) => breakfastRepository.Save(obj);
     }
