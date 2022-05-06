@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:hotel.managment.system.UI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -28,7 +29,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Content="Zurück" FontSize="36"/>
+                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding GoBack}" Content="Zurück" FontSize="36"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" Grid.Row="1">
@@ -38,7 +39,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="2">
-                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Content="Speichern" FontSize="36"/>
+                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding Save}" Content="Speichern" FontSize="36"/>
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" Margin="573.4,0,0,0">
@@ -65,7 +66,7 @@
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="1">
-                        <ComboBox/>
+                        <ComboBox ItemsSource="{Binding Events}"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="2">
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
@@ -122,10 +123,10 @@
                             <TextBlock Text="Kunde" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
-                            <ComboBox/>
+                            <ComboBox ItemsSource="{Binding Employees}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox/>
+                            <ComboBox ItemsSource="{Binding Customers}"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0">
                             <TextBlock Text="Anreise" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
@@ -134,10 +135,10 @@
                             <TextBlock Text="Abreise" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="1">
-                            <DatePicker/>
+                            <DatePicker SelectedDate="{Binding ArrivalTime}"/>
                         </Grid>
                         <Grid Grid.Row="3" Grid.Column="1">
-                            <DatePicker/>
+                            <DatePicker SelectedDate="{Binding DepatureTime}"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2">
@@ -171,11 +172,11 @@
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="0">
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <CheckBox HorizontalAlignment="Left"/>
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Settel}"/>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox/>
+                            <ComboBox ItemsSource="{Binding Breakfasts}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="0">
                             <TextBlock Text="Frühstücksauswahl: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>

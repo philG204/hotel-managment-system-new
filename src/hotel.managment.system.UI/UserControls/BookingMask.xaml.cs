@@ -23,6 +23,8 @@ namespace hotel.managment.system.UI.UserControls
         public BookingMask()
         {
             InitializeComponent();
+            ViewModelBookingMask vmbm = new ViewModelBookingMask();
+            this.DataContext = vmbm;
         }
     }
 }
