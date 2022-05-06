@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text;
@@ -320,11 +321,11 @@ namespace hotel.managment.system.Data.DB
             }
         }
 
-        public List<Booking> GetAll()
+        public ObservableCollection<Booking> GetAll()
         {
             try
             {
-                List<Booking> bookingList = new List<Booking>();
+                ObservableCollection<Booking> bookingList = new ObservableCollection<Booking>();
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 

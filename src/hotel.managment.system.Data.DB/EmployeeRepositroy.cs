@@ -2,6 +2,7 @@
 using hotel_managment_system_v2.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.OleDb;
 using System.Linq;
 using System.Text;
@@ -111,11 +112,11 @@ namespace hotel.managment.system.Data.DB
             }
         }
 
-        public List<Employee> GetAll()
+        public ObservableCollection<Employee> GetAll()
         {
             try
             {
-                List<Employee> employees = new List<Employee>();
+                ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
