@@ -66,7 +66,7 @@
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="1">
-                        <ComboBox ItemsSource="{Binding Events}"/>
+                        <ComboBox ItemsSource="{Binding EventNames}"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="2">
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
@@ -123,10 +123,10 @@
                             <TextBlock Text="Kunde" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding Employees}"/>
+                            <ComboBox ItemsSource="{Binding EmployeeNames}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding Customers}"/>
+                            <ComboBox ItemsSource="{Binding CustomerNames}"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0">
                             <TextBlock Text="Anreise" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
@@ -148,7 +148,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Zimmer" FontSize="36"/>
+                            <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Zimmer" Command="{Binding ShowRoom}" FontSize="36"/>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Button Background="#FF000C80" BorderBrush="#FF000327" Foreground="White" Content="Restaurant" FontSize="36"/>
@@ -176,7 +176,7 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding Breakfasts}"/>
+                            <ComboBox ItemsSource="{Binding BreakfastsNames}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="0">
                             <TextBlock Text="Frühstücksauswahl: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
