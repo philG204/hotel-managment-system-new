@@ -27,13 +27,15 @@ namespace hotel.managment.system.UI.UserControls
         private ICommand delete;
         private ICommand edit;
         private ICommand goBack;
+        private ICommand room;
 
         private Booking model;
 
-        private ObservableCollection<Event> events;
-        private ObservableCollection<Breakfast> breakFasts;
-        private ObservableCollection<Employee> employees;
-        private ObservableCollection<Customer> customers;
+        private ObservableCollection<string> breakfastsNames = new ObservableCollection<string>();
+        private ObservableCollection<string> eventNames = new ObservableCollection<string>();
+        private ObservableCollection<string> employeeNames = new ObservableCollection<string>();
+        private ObservableCollection<string> customerNames = new ObservableCollection<string>();
+
 
         public ViewModelBookingMask()
         {
@@ -41,16 +43,42 @@ namespace hotel.managment.system.UI.UserControls
             save = new RelayCommand(SaveCommand);
             delete = new RelayCommand(DeleteCommand);
             edit = new RelayCommand(EditCommand);
+            room = new RelayCommand(Room);
 
             model = new Booking();
 
             //Load all neccessary objects
+            ObservableCollection<Breakfast> breakfasts = breakFastService.GetAll();
+            foreach (Breakfast breakfast in breakfasts)
+            {
+                breakfastsNames.Add(breakfast.KindOfBreakfast);
+            }
+
             ObservableCollection<Event> events = eventService.GetAll();
-            ObservableCollection<Breakfast> breakFasts = breakFastService.GetAll();
+            foreach (Event e in events)
+            {
+                eventNames.Add(e.EventName + " " + e.DiscountValue.ToString());
+            }
+
             ObservableCollection<Employee> employees = employeeService.GetAll();
-            ObservableCollection<Customer> customers = customerService.GetAll();
+            foreach (Employee employee in employees)
+            {
+                employeeNames.Add(employee.Name + " " + employee.Surename.ToString());
+            }
+
+            ObservableCollection<Employee> customers = employeeService.GetAll();
+            foreach (Employee customer in customers)
+            {
+                customerNames.Add(customer.Name + " " + customer.Surename.ToString());
+            }
         }
 
+        private void Room()
+        {
+            //opens room managment window
+            Test roomManagment = new Test(model);
+            roomManagment.ShowDialog();
+        }
         private void GoBackCommand()
         {
             //Moves back to previous ViewModel
@@ -66,6 +94,8 @@ namespace hotel.managment.system.UI.UserControls
         private void SaveCommand()
         {
             MessageBox.Show("Test");
+
+            /**
             if (model.Room == null)
             {
                 Console.WriteLine("Sie müsssen ein Zimmer buchen");
@@ -75,11 +105,12 @@ namespace hotel.managment.system.UI.UserControls
                 //Booking objeect is getting saved
                 bookingService.Save(model);
             }
+            **/
         }
-        public ObservableCollection<Event> Events { get => events; }
-        public ObservableCollection<Breakfast> Breakfasts { get => breakFasts; }
-        public ObservableCollection<Employee> Employees { get => employees; }
-        public ObservableCollection<Customer> Customers { get => customers; }
+        public ObservableCollection<string> EventNames { get => eventNames; }
+        public ObservableCollection<string> BreakfastsNames { get => breakfastsNames; }
+        public ObservableCollection<string> EmployeeNames { get => employeeNames; }
+        public ObservableCollection<string> CustomerNames { get => customerNames; }
         public string SelectedMethodOfPayment { get => model.MethodOfPayment; set => model.MethodOfPayment = value; }
         public Breakfast SelectedBreakfast { get => model.Breakfast; set => model.Breakfast = value; }
         public Event SelectedEvent { get => model.Event; set => model.Event = value; }
@@ -91,5 +122,6 @@ namespace hotel.managment.system.UI.UserControls
         public Customer SelectedCustomer { get => model.Customer; set => model.Customer = value; }
         public ICommand Save { get => save; set => save = value; }
         public ICommand GoBack { get => goBack; set => goBack = value; }
+        public ICommand ShowRoom { get => room; set => room = value; }
     }
 }
