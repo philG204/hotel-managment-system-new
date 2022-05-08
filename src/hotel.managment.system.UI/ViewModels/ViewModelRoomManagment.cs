@@ -23,12 +23,9 @@ namespace hotel.managment.system.UI.ViewModels
 
         private string selectedRoomComboBox;
         private string selectedRoomListBox;
-        private string selectedEquipment;
 
         private ICommand addRoom;
         private ICommand removeRoom;
-        private ICommand removeEquipment;
-        private ICommand addEquipment;
         private ICommand goBack;
         
         public ViewModelRoomManagment(Booking booking)
@@ -37,8 +34,6 @@ namespace hotel.managment.system.UI.ViewModels
 
             addRoom = new RelayCommand(Add_Room);
             removeRoom = new RelayCommand(Remove_Room);
-            addEquipment = new RelayCommand(Add_Equipment);
-            removeEquipment = new RelayCommand(Remove_Equipment);
             goBack = new RelayCommand(Go_Back);
 
             ObservableCollection<Room> rooms = roomService.GetAll();
@@ -76,16 +71,6 @@ namespace hotel.managment.system.UI.ViewModels
                     model.Room.Rooms.Remove(room);
                 }
             }
-        }
-
-        private void Add_Equipment()
-        {
-
-        }
-
-        private void Remove_Equipment()
-        {
-
         }
 
         public ObservableCollection<string> RoomNames { get => roomNames; }
