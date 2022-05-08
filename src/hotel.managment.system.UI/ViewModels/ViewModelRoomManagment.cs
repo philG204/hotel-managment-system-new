@@ -19,10 +19,12 @@ namespace hotel.managment.system.UI.ViewModels
         private RoomService roomService = new RoomService();
 
         private ObservableCollection<string> roomNames = new ObservableCollection<string>();
-        private ObservableCollection<string> equipmentNames = new ObservableCollection<string>();
+        private ObservableCollection<string> mealNames = new ObservableCollection<string>();
 
         private string selectedRoomComboBox;
         private string selectedRoomListBox;
+        private string selectedMealComboBox;
+        private string selectedMealListBox;
 
         private ICommand addRoom;
         private ICommand removeRoom;

@@ -23,6 +23,7 @@ namespace hotel.managment.system.UI.UserControls
         private EmployeeService employeeService = new EmployeeService();    
         private CustomerService customerService = new CustomerService();
         private RoomService roomService = new RoomService();
+        private MealService mealService = new MealService();
 
         private ICommand save;
         private ICommand delete;
@@ -30,8 +31,8 @@ namespace hotel.managment.system.UI.UserControls
         private ICommand goBack;
         private ICommand addRoom;
         private ICommand removeRoom;
-        private ICommand removeEquipment;
-        private ICommand addEquipment;
+        private ICommand addMeal;
+        private ICommand removeMeal;
 
         private Booking model;
 
@@ -40,12 +41,12 @@ namespace hotel.managment.system.UI.UserControls
         private ObservableCollection<string> employeeNames = new ObservableCollection<string>();
         private ObservableCollection<string> customerNames = new ObservableCollection<string>();
         private ObservableCollection<string> roomNames = new ObservableCollection<string>();
-        private ObservableCollection<string> equipmentNames = new ObservableCollection<string>();
+        private ObservableCollection<string> mealNames = new ObservableCollection<string>();
 
         private string selectedRoomComboBox;
         private string selectedRoomListBox;
-        private string selectedEquipment;
-
+        private string selectedMealComboBox;
+        private string selectedMealListBox;
 
 
         public ViewModelBookingMask()
@@ -56,6 +57,8 @@ namespace hotel.managment.system.UI.UserControls
             edit = new RelayCommand(EditCommand);
             addRoom = new RelayCommand(Add_Room);
             removeRoom = new RelayCommand(Remove_Room);
+            removeMeal = new RelayCommand(Remove_Meal);
+            addMeal = new RelayCommand(Add_Meal);
 
             model = new Booking();
 
@@ -90,6 +93,13 @@ namespace hotel.managment.system.UI.UserControls
             {
                 roomNames.Add(r.RoomName);
             }
+
+            ObservableCollection<Meal> meals = mealService.GetAll();
+
+            foreach (Meal m in meals)
+            {
+                mealNames.Add(m.mealNames);
+            }
         }
 
         private void Add_Room()
@@ -115,7 +125,30 @@ namespace hotel.managment.system.UI.UserControls
                 }
             }
         }
-        
+
+        private void Add_Meal()
+        {
+            ObservableCollection<Room> rooms = roomService.GetAll();
+            foreach (Room room in rooms)
+            {
+                if (room.RoomName == selectedRoomComboBox)
+                {
+                    model.Room.Rooms.Add(room);
+                }
+            }
+        }
+
+        private void Remove_Meal()
+        {
+            ObservableCollection<Room> rooms = roomService.GetAll();
+            foreach (Room room in rooms)
+            {
+                if (room.RoomName == selectedRoomComboBox)
+                {
+                    model.Room.Rooms.Remove(room);
+                }
+            }
+        }
         private void GoBackCommand()
         {
             //Moves back to previous ViewModel
@@ -144,9 +177,12 @@ namespace hotel.managment.system.UI.UserControls
             }
             **/
         }
-        public ObservableCollection<string> RoomNames { get => roomNames; }
+
+        public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
+        public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
         public string SelectedRoomComboBox { get => selectedRoomComboBox; set => selectedRoomComboBox = value; }
         public string SelectedRoomListBox { get => selectedRoomListBox; set => selectedRoomListBox = value; }
+        public ObservableCollection<string> RoomNames { get => roomNames; }
         public ObservableCollection<string> EventNames { get => eventNames; }
         public ObservableCollection<string> BreakfastsNames { get => breakfastsNames; }
         public ObservableCollection<string> EmployeeNames { get => employeeNames; }
@@ -162,5 +198,7 @@ namespace hotel.managment.system.UI.UserControls
         public Customer SelectedCustomer { get => model.Customer; set => model.Customer = value; }
         public ICommand Save { get => save; set => save = value; }
         public ICommand GoBack { get => goBack; set => goBack = value; }
+        public ICommand AddRoom { get => addRoom; set => addRoom = value; }
+        public ICommand RemoveRoom { get => removeRoom; set => removeRoom = value; }
     }
 }
