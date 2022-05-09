@@ -1,6 +1,4 @@
-﻿using hotel.managment.system.UI.ViewModels;
-using hotel_managment_system;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,16 +15,13 @@ using System.Windows.Shapes;
 namespace hotel.managment.system.UI
 {
     /// <summary>
-    /// Interaktionslogik für Test.xaml
+    /// Interaktionslogik für Login.xaml
     /// </summary>
-    public partial class Test : Window
+    public partial class Login : Window
     {
-        public Test(Booking booking)
+        public Login()
         {
             InitializeComponent();
-            ViewModelLogin vm = new ViewModelLogin(booking);
-            this.DataContext = vm;
-
         }
     }
 }

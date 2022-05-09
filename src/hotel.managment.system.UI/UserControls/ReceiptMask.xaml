@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="hotel.managment.system.UI.UserControls.BookingMask"
+﻿<UserControl x:Class="hotel.managment.system.UI.UserControls.ReceiptMask"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:hotel.managment.system.UI.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -102,41 +101,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Margin="107,0,0,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="75"/>
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <ListBox />
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="1">
-                                <Grid Grid.Column="0">
-                                    <Button Command="{}" />
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="0" Grid.Column="1">
-                                <Grid Grid.Column="1">
-                                    <ComboBox />
-                                </Grid>
-                            </Grid>
-                            <Grid Grid.Row="1" Grid.Column="2">
-                                <Grid Grid.Column="0">
-                                    <Button />
-                                </Grid>
-                            </Grid>
-                        </Grid>        
-                    </Grid>
+                    
                 </Grid>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
@@ -168,18 +133,6 @@
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
                             <ComboBox ItemsSource="{Binding CustomerNames}"/>
-                        </Grid>
-                        <Grid Grid.Row="2" Grid.Column="0">
-                            <TextBlock Text="Anreise" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="3" Grid.Column="0">
-                            <TextBlock Text="Abreise" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
-                        </Grid>
-                        <Grid Grid.Row="2" Grid.Column="1">
-                            <DatePicker SelectedDate="{Binding ArrivalTime}"/>
-                        </Grid>
-                        <Grid Grid.Row="3" Grid.Column="1">
-                            <DatePicker SelectedDate="{Binding DepatureTime}"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2" Margin="129,0,0,0">
@@ -269,12 +222,6 @@
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Settel}"/>
                             </Grid>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding BreakfastsNames}"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <TextBlock Text="Frühstücksauswahl: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="1">
                             <ComboBox/>

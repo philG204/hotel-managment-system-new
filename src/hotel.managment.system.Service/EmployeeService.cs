@@ -24,9 +24,16 @@ namespace hotel.managment.system.Service
 
         public bool Save(Employee obj) => employeeRepositroy.Save(obj);
      
-        public string EncryptPassword(string password)
+        public string EncryptPassword(string password, string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                Employee employee = Get();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

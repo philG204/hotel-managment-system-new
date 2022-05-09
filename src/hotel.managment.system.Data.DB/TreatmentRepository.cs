@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 
 namespace hotel.managment.system.Data.DB
 {
-    public class MealRepository : IMealRepository
+    public class TreatmentRepository : ITreatmentRepository
     {
-        public bool Delete(Meal obj)
+        public bool Delete(Treatment obj)
         {
             try
             {
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Speisen` WHERE `Speisennummer` = ?", connection);
-                CheckCmd.Parameters.Add(new OleDbParameter { Value = obj.MealID });
+                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Behandlung` WHERE `Behandlungsnnummer` = ?", connection);
+                CheckCmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentID });
 
                 var CheckDr = CheckCmd.ExecuteReader();
 
                 if (CheckDr.HasRows != false)
                 {
-                    OleDbCommand cmd = new OleDbCommand("DELETE FROM `Speisen` WHERE `Speisennummer` = ?", connection);
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.MealID });
+                    OleDbCommand cmd = new OleDbCommand("DELETE FROM `Behandlung` WHERE `Behandlungsnnummer` = ?", connection);
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentID });
 
                     cmd.ExecuteNonQuery();
 
@@ -52,14 +52,14 @@ namespace hotel.managment.system.Data.DB
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Speisen` WHERE `Speisennummer` = ?", connection);
+                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Behandlung` WHERE `Behandlungsnummer` = ?", connection);
                 CheckCmd.Parameters.Add(new OleDbParameter { Value = id });
 
                 var CheckDr = CheckCmd.ExecuteReader();
 
                 if (CheckDr.HasRows != false)
                 {
-                    OleDbCommand cmd = new OleDbCommand("DELETE FROM `Speisen` WHERE `Speisennummer` = ?", connection);
+                    OleDbCommand cmd = new OleDbCommand("DELETE FROM `Behandlung` WHERE `Behandlungsnummer` = ?", connection);
                     cmd.Parameters.Add(new OleDbParameter { Value = id });
 
                     cmd.ExecuteNonQuery();
@@ -78,26 +78,26 @@ namespace hotel.managment.system.Data.DB
             }
         }
 
-        public Meal Get(int TId)
+        public Treatment Get(int TId)
         {
             try
             {
-                Meal meal = new Meal();
+                Treatment treatment = new Treatment();
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Speisen` WHERE `Speisennummer` = ?", connection);
+                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Behandlung` WHERE `Behandlungsnummer` = ?", connection);
                 cmd.Parameters.Add(new OleDbParameter { Value = TId });
 
                 var dr = cmd.ExecuteReader();
 
                 dr.Read();
-               
-                meal.MealID = Convert.ToInt32(dr.GetValue(0));
-                meal.Name = Convert.ToString(dr.GetValue(1));
-                meal.Price = Convert.ToDouble(dr.GetValue(2));
 
-                OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM Rabatt INNER JOIN Speisen ON Rabatt.Rabattnummer = Speisen.Rabattnummer WHERE `Speisennummer` = ?", connection);
+                treatment.TreatmentID = Convert.ToInt32(dr.GetValue(0));
+                treatment.TreatmentName = Convert.ToString(dr.GetValue(1));
+                treatment.TreatmentAmount = Convert.ToDouble(dr.GetValue(2));
+
+                OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM Rabatt INNER JOIN Behandlung ON Rabatt.Rabattnummer = Behandlung.Rabattnummer WHERE `Behandlungsnummer` = ?", connection);
                 cmd10.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                 var DDr = cmd10.ExecuteReader();
@@ -107,9 +107,9 @@ namespace hotel.managment.system.Data.DB
                 discount.DiscountID = Convert.ToInt32(DDr.GetValue(0));
                 discount.DiscountValue = Convert.ToDouble(DDr.GetValue(1));
 
-                meal.discount = discount;
+                treatment.discount = discount;
 
-                return meal;
+                return treatment;
             }
             catch (Exception ex)
             {
@@ -117,26 +117,26 @@ namespace hotel.managment.system.Data.DB
             }
         }
 
-        public ObservableCollection<Meal> GetAll()
+        public ObservableCollection<Treatment> GetAll()
         {
             try
             {
-                ObservableCollection<Meal> meals = new ObservableCollection<Meal>();
+                ObservableCollection<Treatment> treatments = new ObservableCollection<Treatment>();
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Speisen`", connection);
+                OleDbCommand cmd = new OleDbCommand("SELECT * FROM `Behandlung`", connection);
 
                 var dr = cmd.ExecuteReader();
 
                 while (dr.Read())
                 {
-                    Meal meal = new Meal();
-                    meal.MealID = Convert.ToInt32(dr.GetValue(0));
-                    meal.Name = Convert.ToString(dr.GetValue(1));
-                    meal.Price = Convert.ToDouble(dr.GetValue(2));
+                    Treatment treatment = new Treatment();
+                    treatment.TreatmentID = Convert.ToInt32(dr.GetValue(0));
+                    treatment.TreatmentName = Convert.ToString(dr.GetValue(1));
+                    treatment.TreatmentAmount = Convert.ToDouble(dr.GetValue(2));
 
-                    OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM Rabatt INNER JOIN Speisen ON Rabatt.Rabattnummer = Speisen.Rabattnummer WHERE `Speisennummer` = ?", connection);
+                    OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM Rabatt INNER JOIN Behandlung ON Rabatt.Rabattnummer = Behandlung.Rabattnummer WHERE `Behandlungsnummer` = ?", connection);
                     cmd10.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var DDr = cmd10.ExecuteReader();
@@ -146,11 +146,11 @@ namespace hotel.managment.system.Data.DB
                     discount.DiscountID = Convert.ToInt32(DDr.GetValue(0));
                     discount.DiscountValue = Convert.ToDouble(DDr.GetValue(1));
 
-                    meal.discount = discount;
+                    treatment.discount = discount;
 
-                    meals.Add(meal);
+                    treatments.Add(treatment);
                 }
-                return meals;
+                return treatments;
             }
             catch (Exception ex)
             {
@@ -158,41 +158,41 @@ namespace hotel.managment.system.Data.DB
             }
         }
 
-        public bool Save(Meal obj)
+        public bool Save(Treatment obj)
         {
             try
             {
                 OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
                 connection.Open();
 
-                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Speisen` WHERE `Speisennummer` = ?", connection);
-                CheckCmd.Parameters.Add(new OleDbParameter { Value = obj.MealID });
+                OleDbCommand CheckCmd = new OleDbCommand("SELECT * FROM `Behandlung` WHERE `Behandlungsnummer` = ?", connection);
+                CheckCmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentID });
 
                 var CheckDr = CheckCmd.ExecuteReader();
 
                 if (CheckDr.HasRows == false)
                 {
 
-                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Speisen` (`Speisennummer`, `Name`, `Preis`, `Rabattnummer`) VALUES (?, ?, ?, ?)", connection);
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.MealID });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Name });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Price });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.discount.DiscountID });                   
+                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Behandlung` (`Behandlungsnummer`, `Name`, `Preis`, `Rabattnummer`) VALUES (?, ?, ?, ?)", connection);
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentID });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentName });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentAmount });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.discount.DiscountID });
 
                     cmd.ExecuteNonQuery();
 
-                    OleDbCommand Cmd1 = new OleDbCommand("SELECT * FROM `Speisen` ", connection);
+                    OleDbCommand Cmd1 = new OleDbCommand("SELECT * FROM `Behandlung` ", connection);
                     Cmd1.ExecuteReader();
 
                     return true;
                 }
                 else
                 {
-                    OleDbCommand cmd = new OleDbCommand("UPDATE `Speisen` SET `Name` = ?, `Preis` = ?, `Rabattnummer` = ? WHERE `Speisennummer` = ?", connection);
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Name });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Price });
+                    OleDbCommand cmd = new OleDbCommand("UPDATE `Behandlung` SET `Name` = ?, `Preis` = ?, `Rabattnummer` = ? WHERE `Behandlungsnummer` = ?", connection);
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentName });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentAmount });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.discount.DiscountID });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.MealID });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.TreatmentID });
 
                     cmd.ExecuteNonQuery();
 

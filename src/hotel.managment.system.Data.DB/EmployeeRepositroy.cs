@@ -206,6 +206,6 @@ namespace hotel.managment.system.Data.DB
                 throw ex;
                 return false;
             }
-        }
+        }  
     }
 }
