@@ -24,6 +24,7 @@ namespace hotel.managment.system.Service
 
         public bool Save(Employee obj) => employeeRepositroy.Save(obj);
      
+        /**
         public string EncryptPassword(string password, string name)
         {
             try
@@ -35,5 +36,6 @@ namespace hotel.managment.system.Service
                 throw e;
             }
         }
+        **/
     }
 }

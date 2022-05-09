@@ -21,9 +21,9 @@ namespace hotel.managment.system.UI.ViewModels
 
         public ViewModelLogin()
         {
-            login = new RelayCommand(CheckLogin);
+            //login = new RelayCommand(CheckLogin);
         }
-
+        /**
         private void CheckLogin()
         {
             if ()
@@ -36,7 +36,7 @@ namespace hotel.managment.system.UI.ViewModels
                 // Showing error window
             }
         }
-
+        **/
         public string Password { get => password; set => userName = value; }
         public string UserName { get => userName; set => userName = value; }
         public ICommand Login { get => login; set => login = value; }

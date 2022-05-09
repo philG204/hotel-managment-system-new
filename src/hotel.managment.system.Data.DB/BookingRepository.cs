@@ -143,18 +143,21 @@ namespace hotel.managment.system.Data.DB
                         Room room = new Room();
                         room.RoomID = Convert.ToInt32(RDr.GetValue(0));
 
-                        OleDbCommand cmd6 = new OleDbCommand("SELECT * FROM `Zimmer_Betten` WHERE `Bettnummer` = (SELECT `Bettnummer` FROM `Zimmer_Bettzuteilung` WHERE `Zimmernummer` = ?)", connection);
-                        cmd6.Parameters.Add(new OleDbParameter { Value = RDr.GetValue(0) });
+                        OleDbCommand BedCmd = new OleDbCommand("SELECT * FROM Zimmer_Bettzuteilung LEFT INNER JOIN Zimmer_Betten ON Zimmer_Bettzuteilung.Bettnummer = Zimmer_Betten.Bettnummer WHERE Zimmernummer = ?", connection);
+                        BedCmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
-                        var Bdr = cmd6.ExecuteReader();
+                        var Bdr = BedCmd.ExecuteReader();
 
-                        Bdr.Read();
-                        Bed bed = new Bed();
-                        bed.BedID = Convert.ToInt32(Bdr.GetValue(0));
-                        bed.Name = Convert.ToString(Bdr.GetValue(1));
-                        bed.NumberOfBeds = Convert.ToByte(Bdr.GetValue(2));
+                        while (Bdr.Read())
+                        {
+                            Bed b = new Bed();
+                            b.BedID = Convert.ToInt32(Bdr.GetValue(0));
+                            b.Name = Convert.ToString(Bdr.GetValue(1));
+                            b.NumberOfBeds = Convert.ToByte(Bdr.GetValue(2));
 
-                        room.Bed = bed;
+                            room.Bed.Add(b);
+                        }
+
                         room.RoomName = Convert.ToString(RDr.GetValue(2));
                         room.Price = Convert.ToByte(RDr.GetValue(3));
                         room.NumberOfRooms = Convert.ToByte(RDr.GetValue(4));
@@ -376,7 +379,7 @@ namespace hotel.managment.system.Data.DB
 
                     if (aDR.HasRows)
                     {
-                        OleDbCommand cmd4 = new OleDbCommand("SELECT * FROM Aktion INNER JOIN Buchung_Aktion ON Aktion.Aktionsnummer = Buchung_Aktion.Aktionsnummer WHERE `Kassenbelegnummer` =", connection);
+                        OleDbCommand cmd4 = new OleDbCommand("SELECT * FROM Aktion INNER JOIN Buchung_Aktion ON Aktion.Aktionsnummer = Buchung_Aktion.Aktionsnummer WHERE `Buchungsnummer` = ?", connection);
                         cmd4.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                         var ADr = cmd4.ExecuteReader();
@@ -394,7 +397,7 @@ namespace hotel.managment.system.Data.DB
 
                     SubRoom subRoom = new SubRoom();
 
-                    OleDbCommand cmd5 = new OleDbCommand("SELECT * FROM `Zimmer` INNER JOIN `Buchung_Zimmer` WHERE `Buchungsnummer` = ?", connection);
+                    OleDbCommand cmd5 = new OleDbCommand("SELECT * FROM Zimmer INNER JOIN Buchung_Zimmer ON Zimmer.Zimmernummer = Buchung_Zimmer.Zimmernummer WHERE Buchungsnummer = ?", connection);
                     cmd5.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var RDr = cmd5.ExecuteReader();
@@ -404,18 +407,21 @@ namespace hotel.managment.system.Data.DB
                         Room room = new Room();
                         room.RoomID = Convert.ToInt32(RDr.GetValue(0));
 
-                        OleDbCommand cmd6 = new OleDbCommand("SELECT * FROM `Zimmer_Betten` INNER JOIN `Zimmer_Bettzuteilung` WHERE `Zimmernummer` = ?", connection);
-                        cmd6.Parameters.Add(new OleDbParameter { Value = RDr.GetValue(0) });
+                        OleDbCommand BedCmd = new OleDbCommand("SELECT * FROM Zimmer_Bettzuteilung INNER JOIN Zimmer_Betten ON Zimmer_Bettzuteilung.Bettnummer = Zimmer_Betten.Bettnummer WHERE Zimmernummer = ?", connection);
+                        BedCmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
-                        var Bdr = cmd6.ExecuteReader();
+                        var Bdr = BedCmd.ExecuteReader();
 
-                        Bdr.Read();
-                        Bed bed = new Bed();
-                        bed.BedID = Convert.ToInt32(Bdr.GetValue(0));
-                        bed.Name = Convert.ToString(Bdr.GetValue(1));
-                        bed.NumberOfBeds = Convert.ToByte(Bdr.GetValue(2));
+                        while (Bdr.Read())
+                        {
+                            Bed b = new Bed();
+                            b.BedID = Convert.ToInt32(Bdr.GetValue(0));
+                            b.Name = Convert.ToString(Bdr.GetValue(1));
+                            b.NumberOfBeds = Convert.ToByte(Bdr.GetValue(2));
 
-                        room.Bed = bed;
+                            room.Bed.Add(b);
+                        }
+
                         room.RoomName = Convert.ToString(RDr.GetValue(2));
                         room.Price = Convert.ToByte(RDr.GetValue(3));
                         room.NumberOfRooms = Convert.ToByte(RDr.GetValue(4));
@@ -426,7 +432,7 @@ namespace hotel.managment.system.Data.DB
                         room.Lightning = Convert.ToString(RDr.GetValue(9));
                         room.Size = Convert.ToByte(RDr.GetValue(3));
 
-                        OleDbCommand cmd7 = new OleDbCommand("SELECT * FROM `Ausstatungsgegenstaende` INNER JOIN `Buchung_Zimmer` WHERE `Buchungsnummer` = ?", connection);
+                        OleDbCommand cmd7 = new OleDbCommand("SELECT * FROM `Ausstatungsgegenstaende` INNER JOIN `Buchung_Zimmer` ON Ausstatungsgegenstaende.Ausstatungsnummer = Buchung_Zimmer.Ausstatungsnummer WHERE `Buchungsnummer` = ?", connection);
                         cmd7.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                         var EDDr = cmd7.ExecuteReader();
@@ -454,7 +460,7 @@ namespace hotel.managment.system.Data.DB
 
                     TotalMealCosts totalMealCost = new TotalMealCosts();
 
-                    OleDbCommand cmd9 = new OleDbCommand("SELECT * FROM `Speisen` INNER JOIN `Buchung_Hotel_Speisen` WHERE `Buchungsnummer` = ?", connection);
+                    OleDbCommand cmd9 = new OleDbCommand("SELECT * FROM `Speisen` INNER JOIN `Buchung_Hotel_Speisen` ON Speisen.Speisennummer = Buchung_Hotel_Speisen.Speisennummer WHERE `Buchungsnummer` = ?", connection);
                     cmd9.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var MDr = cmd9.ExecuteReader();
@@ -467,7 +473,7 @@ namespace hotel.managment.system.Data.DB
                             meal.MealID = Convert.ToInt32(MDr.GetValue(0));
                             meal.Name = Convert.ToString(MDr.GetValue(1));
 
-                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` INNE JOIN `Speisen` WHERE `Speisennummer` = ?", connection);
+                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` INNER JOIN `Speisen` ON Rabatt.Rabattnummer = Speisen.Rabattnummer WHERE `Speisennummer` = ?", connection);
                             cmd10.Parameters.Add(new OleDbParameter { Value = MDr.GetValue(0) });
 
                             var DDr = cmd10.ExecuteReader();
@@ -493,7 +499,7 @@ namespace hotel.managment.system.Data.DB
                         booking.TotalMealCosts = totalMealCost;
                     }                   
 
-                    OleDbCommand cmd12 = new OleDbCommand("SELECT * FROM `Behandlung` INNER JOIN `Buchung_Hotel_Behandlung` WHERE `Buchungsnummer` = ?", connection);
+                    OleDbCommand cmd12 = new OleDbCommand("SELECT * FROM `Behandlung` INNER JOIN `Buchung_Hotel_Behandlung` ON Behandlung.Behandlungsnummer = Buchung_Hotel_Behandlung.Behandlungsnummer WHERE `Buchungsnummer` = ?", connection);
                     cmd12.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var TDr = cmd12.ExecuteReader();
@@ -509,7 +515,7 @@ namespace hotel.managment.system.Data.DB
                             treatment.TreatmentID = Convert.ToInt32(TDr.GetValue(0));
                             treatment.TreatmentName = Convert.ToString(TDr.GetValue(1));
 
-                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM `Rabatt` INNER JOIN `Behandlung` WHERE `Behandlungsnummer` = ?", connection);
+                            OleDbCommand cmd10 = new OleDbCommand("SELECT * FROM Rabatt INNER JOIN Behandlung ON Rabatt.Rabattnummer = Behandlung.Rabattnummer WHERE `Behandlungsnummer` = ?", connection);
                             cmd10.Parameters.Add(new OleDbParameter { Value = TDr.GetValue(0) });
 
                             var DDr = cmd10.ExecuteReader();
@@ -539,7 +545,7 @@ namespace hotel.managment.system.Data.DB
 
                     SubEmployee subEmployee = new SubEmployee();
 
-                    OleDbCommand cmd14 = new OleDbCommand("SELECT * FROM `Mitarbeiter` INNER JOIN `Buchung_Mitarbeiter` WHERE `Buchungsnummer` = ?", connection);
+                    OleDbCommand cmd14 = new OleDbCommand("SELECT * FROM Mitarbeiter INNER JOIN Buchung_Mitarbeiter ON Mitarbeiter.Mitarbeiternummer = Buchung_Mitarbeiter.Mitarbeiternummer WHERE `Buchungsnummer` = ?", connection);
                     cmd14.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
                     var EDr = cmd14.ExecuteReader();

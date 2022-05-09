@@ -46,13 +46,9 @@ namespace hotel.managment.system.UI.UserControls
         private ObservableCollection<string> roomNames = new ObservableCollection<string>();
         private ObservableCollection<string> mealNames = new ObservableCollection<string>();
         private ObservableCollection<string> treatmentNames = new ObservableCollection<string>();
-        private ObservableCollection<int> bookingIDs = new ObservableCollection<int>();
-        private ObservableCollection<string> bookingCustomerNames = new ObservableCollection<string>();
-        private ObservableCollection<DateTime> bookingDates = new ObservableCollection<DateTime>();
-        private ObservableCollection<DateTime> arrivalDates = new ObservableCollection<DateTime>();
-        private ObservableCollection<DateTime> depatureDates = new ObservableCollection<DateTime>();
-        private ObservableCollection<double> bookingAmount = new ObservableCollection<double>();
-        private ObservableCollection<bool> bookingSettel = new ObservableCollection<bool>();
+        ObservableCollection<Booking> bookings = new ObservableCollection<Booking>();
+
+        private ObservableCollection<string> mealListBox = new ObservableCollection<string>();
 
         private string selectedRoomComboBox;
         private string selectedRoomListBox;
@@ -95,41 +91,33 @@ namespace hotel.managment.system.UI.UserControls
                 employeeNames.Add(employee.Name + " " + employee.Surename.ToString());
             }
 
-            ObservableCollection<Employee> customers = employeeService.GetAll();
-            foreach (Employee customer in customers)
+            ObservableCollection<Customer> customers = customerService.GetAll();
+            foreach (Customer customer in customers)
             {
-                customerNames.Add(customer.Name + " " + customer.Surename.ToString());
+                customerNames.Add(customer.CustomerID + " " + customer.Name + " " + customer.Surname.ToString());
             }
 
             ObservableCollection<Room> rooms = roomService.GetAll();
             foreach (Room r in rooms)
             {
-                roomNames.Add(r.RoomName);
+                roomNames.Add(r.RoomID + " " + r.RoomName);
             }
 
             ObservableCollection<Meal> meals = mealService.GetAll();
             foreach (Meal m in meals)
             {
-                mealNames.Add(m.Name);
+                mealNames.Add(m.MealID + " " + m.Name);
+                mealListBox.Add(m.MealID + " " + m.Name);
             }
 
             ObservableCollection<Treatment> treatments = treatmentService.GetAll();
             foreach (Treatment t in treatments)
             {
-                treatmentNames.Add(t.TreatmentName);
+                treatmentNames.Add(t.TreatmentID + " " + t.TreatmentName);
             }
 
-            ObservableCollection<Booking> bookings = bookingService.GetAll();
-            foreach (Booking b in bookings)
-            {
-                bookingIDs.Add(b.BookingID);
-                bookingCustomerNames.Add(b.Customer.Name + " " + b.Customer.Surname);
-                bookingDates.Add(b.BookingDate);
-                arrivalDates.Add(b.Arrival);
-                depatureDates.Add(b.Depature);
-                bookingAmount.Add(b.Amount);
-                bookingSettel.Add(b.settel);
-            }
+            bookings = bookingService.GetAll();
+            
         }
 
         private void Add_Room()
@@ -181,14 +169,17 @@ namespace hotel.managment.system.UI.UserControls
         }
         private void Add_Meal()
         {
-            ObservableCollection<Room> rooms = roomService.GetAll();
-            foreach (Room room in rooms)
+            /**
+            ObservableCollection<Meal> meals = mealService.GetAll();
+            foreach (Meal meal in meals)
             {
-                if (room.RoomName == selectedRoomComboBox)
+                if (meal.Name == selectedMealComboBox.Split(" ")[1])
                 {
                     model.Room.Rooms.Add(room);
+                    mealListBox.Add();
                 }
             }
+            **/
         }
 
         private void Remove_Meal()
@@ -234,14 +225,10 @@ namespace hotel.managment.system.UI.UserControls
         }
         public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
         public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
+        public string SelectedTreatmentComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
+        public string SelectedTreatmentListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
         public string SelectedRoomComboBox { get => selectedRoomComboBox; set => selectedRoomComboBox = value; }
         public string SelectedRoomListBox { get => selectedRoomListBox; set => selectedRoomListBox = value; }
-        public ObservableCollection<DateTime> BookingDate { get => bookingDates; set => bookingDates = value; }
-        public ObservableCollection<DateTime> ArrivalDate { get => arrivalDates; set => arrivalDates = value; }
-        public ObservableCollection<DateTime> DepatureDate { get => depatureDates; set => depatureDates = value; }
-        public ObservableCollection<int> BooingIDs { get => bookingIDs; set => BooingIDs = value; }
-        public ObservableCollection<bool> BookingSettel { get => bookingSettel; set => bookingSettel = value; }
-        public ObservableCollection<string> BookingCustomerNames { get => bookingCustomerNames; set => bookingCustomerNames = value; }
         public ObservableCollection<string> MealNames { get => mealNames; }
         public ObservableCollection<string> TreatmentNames { get => treatmentNames; }
         public ObservableCollection<string> RoomNames { get => roomNames; }
@@ -249,6 +236,7 @@ namespace hotel.managment.system.UI.UserControls
         public ObservableCollection<string> BreakfastsNames { get => breakfastsNames; }
         public ObservableCollection<string> EmployeeNames { get => employeeNames; }
         public ObservableCollection<string> CustomerNames { get => customerNames; }
+        public ObservableCollection<Booking> Bookings { get => bookings; }
         public int BookinID { get => model.BookingID; set => model.BookingID = value; }
         public string SelectedMethodOfPayment { get => model.MethodOfPayment; set => model.MethodOfPayment = value; }
         public Breakfast SelectedBreakfast { get => model.Breakfast; set => model.Breakfast = value; }

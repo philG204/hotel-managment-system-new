@@ -94,7 +94,22 @@ namespace hotel.managment.system.Data.DB
                 dr.Read();
 
                 r.RoomID = Convert.ToInt32(dr.GetValue(0));
-                r.Bed.BedID = Convert.ToInt32(dr.GetValue(1));
+
+                OleDbCommand BedCmd = new OleDbCommand("SELECT * FROM Zimmer_Bettzuteilung LEFT INNER JOIN Zimmer_Betten ON Zimmer_Bettzuteilung.Bettnummer = Zimmer_Betten.Bettnummer WHERE Zimmernummer = ?", connection);
+                BedCmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
+
+                var Bdr = BedCmd.ExecuteReader();
+
+                while (Bdr.Read())
+                {
+                    Bed b = new Bed();
+                    b.BedID = Convert.ToInt32(Bdr.GetValue(0));
+                    b.Name = Convert.ToString(Bdr.GetValue(1));
+                    b.NumberOfBeds = Convert.ToByte(Bdr.GetValue(2));
+
+                    r.Bed.Add(b);
+                }
+
                 r.RoomName = Convert.ToString(dr.GetValue(2));
                 r.Price = Convert.ToDouble(dr.GetValue(3));
                 r.Size = Convert.ToByte(dr.GetValue(4));
@@ -129,16 +144,31 @@ namespace hotel.managment.system.Data.DB
                 {
                     Room r = new Room();
                     r.RoomID = Convert.ToInt32(dr.GetValue(0));
-                    r.Bed.BedID = Convert.ToInt32(dr.GetValue(1));
-                    r.RoomName = Convert.ToString(dr.GetValue(2));
-                    r.Price = Convert.ToDouble(dr.GetValue(3));
-                    r.Size = Convert.ToByte(dr.GetValue(4));
-                    r.NumberOfRooms = Convert.ToByte(dr.GetValue(5));
-                    r.Positon = Convert.ToString(dr.GetValue(6));
-                    r.Floor = Convert.ToString(dr.GetValue(7));
-                    r.SizeOfShower = Convert.ToByte(dr.GetValue(8));
-                    r.Equipment = Convert.ToString(dr.GetValue(9));
-                    r.Lightning = Convert.ToString(dr.GetValue(10));                  
+
+                    OleDbCommand BedCmd = new OleDbCommand("SELECT * FROM Zimmer_Bettzuteilung INNER JOIN Zimmer_Betten ON Zimmer_Bettzuteilung.Bettnummer = Zimmer_Betten.Bettnummer WHERE Zimmernummer = ?", connection);
+                    BedCmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0)});
+
+                    var Bdr = BedCmd.ExecuteReader();
+
+                    while (Bdr.Read())
+                    {
+                        Bed b = new Bed();
+                        b.BedID = Convert.ToInt32(Bdr.GetValue(0));
+                        b.Name = Convert.ToString(Bdr.GetValue(1));
+                        b.NumberOfBeds = Convert.ToByte(Bdr.GetValue(2));
+
+                        r.Bed.Add(b);
+                    }
+                    
+                    r.RoomName = Convert.ToString(dr.GetValue(1));
+                    r.Price = Convert.ToDouble(dr.GetValue(2));
+                    r.Size = Convert.ToByte(dr.GetValue(3));
+                    r.NumberOfRooms = Convert.ToByte(dr.GetValue(4));
+                    r.Positon = Convert.ToString(dr.GetValue(5));
+                    r.Floor = Convert.ToString(dr.GetValue(6));
+                    r.SizeOfShower = Convert.ToByte(dr.GetValue(7));
+                    r.Equipment = Convert.ToString(dr.GetValue(8));
+                    r.Lightning = Convert.ToString(dr.GetValue(9));                  
 
                     rs.Add(r);
                 }
@@ -165,9 +195,16 @@ namespace hotel.managment.system.Data.DB
                 if (CheckDr.HasRows == false)
                 {
 
-                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Zimmer` (`Zimmernummer`, `Bettnummer`, `Zimmername`, `Preis`, `Größe`, `Zimmeranzahl`, `Lage`, `Boden`, `Duschengroeße`, `Ausstatung`, `Belechtung`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", connection);
+                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Zimmer` (`Zimmernummer`, `Zimmername`, `Preis`, `Größe`, `Zimmeranzahl`, `Lage`, `Boden`, `Duschengroeße`, `Ausstatung`, `Belechtung`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", connection);
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.RoomID });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Bed.BedID });
+
+                    foreach (Bed bed in obj.Bed)
+                    {
+                        OleDbCommand BedCmd = new OleDbCommand("INSERT INTO `Zimmer_Bettzuteilung` (`Zimmernummer`, `Bettnummer`) VALUES (?, ?)", connection);
+                        cmd.Parameters.Add(new OleDbParameter { Value = obj.RoomID });
+                        cmd.Parameters.Add(new OleDbParameter { Value = bed.BedID });
+                    }
+
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.RoomName });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Price });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Size });
@@ -187,8 +224,15 @@ namespace hotel.managment.system.Data.DB
                 }
                 else
                 {
-                    OleDbCommand cmd = new OleDbCommand("UPDATE `Zimmer` SET `Bettnummer` = ?, `Zimmername` = ?, `Preis` = ?, `Größe` = ?, `Zimmeranzahl` = ?, `Lage` = ?, `Boden` = ?, `Duschengroeße` = ?, `Ausstatung` = ?, `Belechtung` = ? WHERE `Zimmernummer` = ?", connection);                   
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Bed.BedID });
+                    OleDbCommand cmd = new OleDbCommand("UPDATE `Zimmer` SET `Zimmername` = ?, `Preis` = ?, `Größe` = ?, `Zimmeranzahl` = ?, `Lage` = ?, `Boden` = ?, `Duschengroeße` = ?, `Ausstatung` = ?, `Belechtung` = ? WHERE `Zimmernummer` = ?", connection);
+
+                    foreach (Bed bed in obj.Bed)
+                    {
+                        OleDbCommand BedCmd = new OleDbCommand("UPDATE `Zimmer_Bettzuteilung` SET `Zimmernummer` = ?, `Bettnummer` = ?", connection);
+                        cmd.Parameters.Add(new OleDbParameter { Value = obj.RoomID });
+                        cmd.Parameters.Add(new OleDbParameter { Value = bed.BedID });
+                    }
+
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.RoomName });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Price });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Size });
