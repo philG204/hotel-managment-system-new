@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace hotel.managment.system.UI.ViewModels
 {
-    public class ViewModelReceipt
+    public class ViewModelReceiptMask
     {
         // Needed Services
         private ReceiptService receiptService = new ReceiptService();
@@ -39,18 +39,16 @@ namespace hotel.managment.system.UI.ViewModels
         private ObservableCollection<string> customerNames = new ObservableCollection<string>();
         private ObservableCollection<string> mealNames = new ObservableCollection<string>();
         private ObservableCollection<string> treatmentNames = new ObservableCollection<string>();
-        private ObservableCollection<int> receiptIDs = new ObservableCollection<int>();
-        private ObservableCollection<string> receiptCustomerNames = new ObservableCollection<string>();
-        private ObservableCollection<DateTime> receiptDates = new ObservableCollection<DateTime>();
-        private ObservableCollection<double> receiptAmount = new ObservableCollection<double>();
-        private ObservableCollection<bool> receiptSettel = new ObservableCollection<bool>();
+        private ObservableCollection<Receipt> receipts = new ObservableCollection<Receipt>();
 
         private string selectedMealComboBox;
         private string selectedMealListBox;
         private string selectedTreatmentComboBox;
         private string selectedTreatmentListBox;
 
-        public ViewModelReceipt()
+        private Receipt selectedReceipt;
+
+        public ViewModelReceiptMask()
         {
             goBack = new RelayCommand(GoBackCommand);
             save = new RelayCommand(SaveCommand);
@@ -94,15 +92,7 @@ namespace hotel.managment.system.UI.ViewModels
                 treatmentNames.Add(t.TreatmentName);
             }
 
-            ObservableCollection<Receipt> receipts = receiptService.GetAll();
-            foreach (Receipt r in receipts)
-            {
-                receiptIDs.Add(r.ReceiptID);
-                receiptCustomerNames.Add(r.Customer.Name + " " + r.Customer.Surname);
-                receiptDates.Add(r.PaymentDate);
-                receiptAmount.Add(r.CashAmount);
-                receiptSettel.Add(r.settel);
-            }
+            ObservableCollection<Receipt> receipts = receiptService.GetAll();         
         }       
 
         private void Add_Treatment()
@@ -180,12 +170,10 @@ namespace hotel.managment.system.UI.ViewModels
             }
             **/
         }
+        public Receipt SelectedReceipt { get => selectedReceipt; set => selectedReceipt = value; }
         public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
         public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
-        public ObservableCollection<DateTime> ReceiptDates { get => receiptDates; set => receiptDates = value; }
-        public ObservableCollection<int> ReceiptIDs { get => receiptIDs; set => receiptIDs = value; }
-        public ObservableCollection<bool> ReceiptSettel { get => receiptSettel; set => receiptSettel = value; }
-        public ObservableCollection<string> BookingCustomerNames { get => receiptCustomerNames; set => receiptCustomerNames = value; }
+        public ObservableCollection<Receipt> Receipts { get => receipts; }
         public ObservableCollection<string> MealNames { get => mealNames; }
         public ObservableCollection<string> TreatmentNames { get => treatmentNames; }
         public ObservableCollection<string> EventNames { get => eventNames; }

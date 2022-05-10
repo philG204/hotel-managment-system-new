@@ -1,11 +1,12 @@
-﻿<UserControl x:Class="hotel.managment.system.UI.UserControls.ReceiptMask"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:hotel.managment.system.UI.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
+﻿<Window x:Class="hotel.managment.system.UI.BookingEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:hotel.managment.system.UI"
+        mc:Ignorable="d"
+        Title="BookingEdit" d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -64,7 +65,7 @@
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="1">
-                        <ComboBox ItemsSource="{Binding EventNames}"/>
+                        <ComboBox ItemsSource="{Binding EventNames}" SelectedItem="{Binding SelectedEvent}"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="2">
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
@@ -101,7 +102,41 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    
+                    <Grid Grid.Column="1" Margin="107,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="75"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <ListBox />
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="1">
+                                <Grid Grid.Column="0">
+                                    <Button Command="{Binding RemoveTreatment}" />
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="1">
+                                <Grid Grid.Column="1">
+                                    <ComboBox ItemsSource="{Binding TreatmentNames}" SelectedItem="{Binding SelectedTreatmentComboBox}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="1" Grid.Column="2">
+                                <Grid Grid.Column="0">
+                                    <Button Command="{Binding AddTreatment}"/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
@@ -133,6 +168,18 @@
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
                             <ComboBox ItemsSource="{Binding CustomerNames}"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <TextBlock Text="Anreise" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="0">
+                            <TextBlock Text="Abreise" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="1">
+                            <DatePicker SelectedDate="{Binding ArrivalTime}"/>
+                        </Grid>
+                        <Grid Grid.Row="3" Grid.Column="1">
+                            <DatePicker SelectedDate="{Binding DepatureTime}"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2" Margin="129,0,0,0">
@@ -223,6 +270,12 @@
                                 <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Settel}"/>
                             </Grid>
                         </Grid>
+                        <Grid Grid.Row="1" Grid.Column="1">
+                            <ComboBox ItemsSource="{Binding BreakfastsNames}"/>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <TextBlock Text="Frühstücksauswahl: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
+                        </Grid>
                         <Grid Grid.Row="2" Grid.Column="1">
                             <ComboBox/>
                         </Grid>
@@ -240,21 +293,35 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedReceipt}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipts}">
+            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedBooking}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipt}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ReceiptID}" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding BookingID}" />
                     <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Surename}" />
                     <DataGridTemplateColumn Header="Anreise">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker SelectedDate="{Binding PaymentDate}" BorderThickness="0" />
+                                <DatePicker SelectedDate="{Binding BookingDate}" BorderThickness="0" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Rechnungsbetrag" Binding="{Binding CashAmount}" />
-                    <DataGridCheckBoxColumn Header="Rechnung beglichen" Binding="{Binding settel}" />
+                    <DataGridTextColumn Header="Buchungsbetrag" Binding="{Binding Amount}" />
+                    <DataGridTemplateColumn Header="Anreise">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding Arrival}" BorderThickness="0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Abreise">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding Depature}" BorderThickness="0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridCheckBoxColumn Header="Buchung beglichen" Binding="{Binding settel}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </Grid>
-</UserControl>
+</Window>

@@ -46,7 +46,7 @@ namespace hotel.managment.system.UI.UserControls
         private ObservableCollection<string> roomNames = new ObservableCollection<string>();
         private ObservableCollection<string> mealNames = new ObservableCollection<string>();
         private ObservableCollection<string> treatmentNames = new ObservableCollection<string>();
-        ObservableCollection<Booking> bookings = new ObservableCollection<Booking>();
+        private ObservableCollection<Booking> bookings = new ObservableCollection<Booking>();
 
         private ObservableCollection<string> mealListBox = new ObservableCollection<string>();
 
@@ -56,6 +56,8 @@ namespace hotel.managment.system.UI.UserControls
         private string selectedMealListBox;
         private string selectedTreatmentComboBox;
         private string selectedTreatmentListBox;
+
+        private Booking selectedBookig;
 
         public ViewModelBookingMask()
         {
@@ -169,27 +171,27 @@ namespace hotel.managment.system.UI.UserControls
         }
         private void Add_Meal()
         {
-            /**
+            
             ObservableCollection<Meal> meals = mealService.GetAll();
             foreach (Meal meal in meals)
             {
                 if (meal.Name == selectedMealComboBox.Split(" ")[1])
                 {
-                    model.Room.Rooms.Add(room);
-                    mealListBox.Add();
+                    model.TotalMealCosts.Meals.Add(meal);
+                    //mealListBox.Add();
                 }
             }
-            **/
         }
 
         private void Remove_Meal()
         {
-            ObservableCollection<Room> rooms = roomService.GetAll();
-            foreach (Room room in rooms)
+            ObservableCollection<Meal> meals = mealService.GetAll();
+            foreach (Meal meal in meals)
             {
-                if (room.RoomName == selectedRoomComboBox)
+                if (meal.Name == selectedMealComboBox.Split(" ")[1])
                 {
-                    model.Room.Rooms.Remove(room);
+                    model.TotalMealCosts.Meals.Remove(meal);
+                    //mealListBox.Add();
                 }
             }
         }
@@ -202,10 +204,13 @@ namespace hotel.managment.system.UI.UserControls
         private void DeleteCommand() 
         {
             //Delete...
+            bookingService.Delete(selectedBookig);
         }
         private void EditCommand()
         {
             //Edit...
+            BookingEdit be = new BookingEdit(SelectedBooking);
+            be.ShowDialog();
         }
         private void SaveCommand()
         {
@@ -214,7 +219,7 @@ namespace hotel.managment.system.UI.UserControls
             /**
             if (model.Room == null)
             {
-                Console.WriteLine("Sie müsssen ein Zimmer buchen");
+                MessageBox.Show("Sie müsssen ein Zimmer hinterlegen");
             }
             else
             {
@@ -223,6 +228,7 @@ namespace hotel.managment.system.UI.UserControls
             }
             **/
         }
+        public Booking SelectedBooking { get => selectedBookig; set => selectedBookig = value; }
         public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
         public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
         public string SelectedTreatmentComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }

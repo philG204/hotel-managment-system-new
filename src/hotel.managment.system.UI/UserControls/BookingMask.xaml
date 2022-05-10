@@ -293,7 +293,7 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Bookings}">
+            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedBooking}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipt}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding BookingID}" />
                     <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Surename}" />
