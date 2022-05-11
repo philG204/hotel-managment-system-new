@@ -17,7 +17,6 @@ namespace hotel_managment_system.Models
         public string Positon { get; set; }
         public string Floor { get; set; }
         public byte SizeOfShower { get; set; }
-        public string Equipment { get; set; }
         public string Lightning { get; set; }
         public byte Size { get; set; }
         public Equipment equipment { get; set; }

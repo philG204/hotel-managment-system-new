@@ -117,7 +117,20 @@ namespace hotel.managment.system.Data.DB
                 r.Positon = Convert.ToString(dr.GetValue(6));
                 r.Floor = Convert.ToString(dr.GetValue(7));
                 r.SizeOfShower = Convert.ToByte(dr.GetValue(8));
-                r.Equipment = Convert.ToString(dr.GetValue(9));
+
+                OleDbCommand Ecmd = new OleDbCommand("SELECT * FROM Buchung_Zimmer INNER JOIN Ausstatungsgegenstaende ON Buchung_Zimmer.Ausstatungsnummer = Ausstatungsgegenstaende.Ausstatungsnummer WHERE Zimmernummer = ?", connection);
+                Ecmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
+
+                var Edr = Ecmd.ExecuteReader();
+
+                Edr.Read();
+
+                Equipment equipment = new Equipment();
+                equipment.EquipmentID = Convert.ToInt32(Edr.GetValue(0));
+                equipment.EquipmentName = Convert.ToString(Edr.GetValue(1));
+
+                r.equipment = equipment;
+
                 r.Lightning = Convert.ToString(dr.GetValue(10));
 
                 return r;
@@ -167,7 +180,19 @@ namespace hotel.managment.system.Data.DB
                     r.Positon = Convert.ToString(dr.GetValue(5));
                     r.Floor = Convert.ToString(dr.GetValue(6));
                     r.SizeOfShower = Convert.ToByte(dr.GetValue(7));
-                    r.Equipment = Convert.ToString(dr.GetValue(8));
+
+                    OleDbCommand Ecmd = new OleDbCommand("SELECT * FROM Buchung_Zimmer INNER JOIN Ausstatungsgegenstaende ON Buchung_Zimmer.Ausstatungsnummer = Ausstatungsgegenstaende.Ausstatungsnummer WHERE Buchungsnummer = ?", connection);
+                    Ecmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0)});
+                    
+                    var Edr = Ecmd.ExecuteReader();
+
+                    Edr.Read();
+
+                    Equipment equipment = new Equipment();
+                    equipment.EquipmentID = Convert.ToInt32(Edr.GetValue(0));
+                    equipment.EquipmentName = Convert.ToString(Edr.GetValue(1));
+
+                    r.equipment = equipment;
                     r.Lightning = Convert.ToString(dr.GetValue(9));                  
 
                     rs.Add(r);
@@ -212,7 +237,7 @@ namespace hotel.managment.system.Data.DB
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Positon });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Floor });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.SizeOfShower });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Equipment });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.equipment.EquipmentID});
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Lightning });
 
                     cmd.ExecuteNonQuery();
@@ -240,7 +265,7 @@ namespace hotel.managment.system.Data.DB
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Positon });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Floor });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.SizeOfShower });
-                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Equipment });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.equipment.EquipmentID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Lightning });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.RoomID });
 

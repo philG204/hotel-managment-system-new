@@ -62,10 +62,10 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Column="1" Grid.Row="0">
-                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding BookingAmount, Mode=TwoWay}" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="1">
-                        <ComboBox ItemsSource="{Binding EventNames}" SelectedItem="{Binding SelectedEvent}"/>
+                        <ComboBox ItemsSource="{Binding Events}" DisplayMemberPath="EventName" SelectedItem="{Binding SelectedEvent}"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="2">
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
@@ -127,7 +127,7 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding TreatmentNames}" SelectedItem="{Binding SelectedTreatmentComboBox}"/>
+                                    <ComboBox ItemsSource="{Binding Treatments}" DisplayMemberPath="TreatmentName" SelectedItem="{Binding SelectedTreatmentComboBox}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
@@ -164,10 +164,10 @@
                             <TextBlock Text="Kunde" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding EmployeeNames}"/>
+                            <ComboBox ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}" DisplayMemberPath="Surename"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding CustomerNames}"/>
+                            <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}" DisplayMemberPath="Name"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0">
                             <TextBlock Text="Anreise" Foreground="White" FontSize="36" HorizontalAlignment="Center"/>
@@ -188,7 +188,7 @@
                             <RowDefinition Height="75"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0">
-                            <ListBox/>
+                            <ListBox ItemsSource="{Binding roomsListBox, Mode=TwoWay}" DisplayMemberPath="RoomName"/>
                         </Grid>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
@@ -207,12 +207,12 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding RoomNames}" SelectedItem="{Binding SelectedRoomComboBox}"/>
+                                    <ComboBox ItemsSource="{Binding Rooms}" DisplayMemberPath="RoomName" SelectedItem="{Binding SelectedRoomComboBox, Mode=TwoWay}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding AddRoom}"/>
+                                    <Button Command="{Binding AddRoom}" Content="Hinzufügen"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -242,7 +242,7 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding MealNames}" SelectedItem="{Binding SelectedMealComboBox}"/>
+                                    <ComboBox ItemsSource="{Binding Meals}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMealComboBox}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
@@ -267,17 +267,17 @@
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="0">
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Settel}"/>
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Settel, Mode=TwoWay}"/>
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding BreakfastsNames}"/>
+                            <ComboBox ItemsSource="{Binding Breakfastss}" SelectedItem="{Binding SelectedBreakfast}" DisplayMemberPath="KindOfBreakfast"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="0">
                             <TextBlock Text="Frühstücksauswahl: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="1">
-                            <ComboBox/>
+                            <ComboBox ItemsSource="{Binding MethodeOfPayment}" SelectedItem="{Binding SelectedMethodOfPayment}"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0">
                             <TextBlock Text="Zahlungsart: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
@@ -293,10 +293,16 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedBooking}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipt}">
+            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedBooking}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Bookings}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Löschen" Command="{Binding Delete}"/>
+                        <MenuItem Header="Bearbeiten" Command="{Binding Edit}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding BookingID}" />
-                    <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Surename}" />
+                    <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Name}" />
                     <DataGridTemplateColumn Header="Anreise">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -19,6 +19,7 @@ namespace hotel.managment.system.UI.UserControls
         // Needed Services
         private BookingService bookingService = new BookingService();
         private EventService eventService = new EventService();
+        private BreakfastService breakfastService = new BreakfastService();
         private BreakfastService breakFastService = new BreakfastService();
         private EmployeeService employeeService = new EmployeeService();    
         private CustomerService customerService = new CustomerService();
@@ -38,24 +39,29 @@ namespace hotel.managment.system.UI.UserControls
         private ICommand removeTreatment;
 
         private Booking model;
+        private Employee loggedInEmployee;
 
-        private ObservableCollection<string> breakfastsNames = new ObservableCollection<string>();
-        private ObservableCollection<string> eventNames = new ObservableCollection<string>();
-        private ObservableCollection<string> employeeNames = new ObservableCollection<string>();
-        private ObservableCollection<string> customerNames = new ObservableCollection<string>();
-        private ObservableCollection<string> roomNames = new ObservableCollection<string>();
-        private ObservableCollection<string> mealNames = new ObservableCollection<string>();
-        private ObservableCollection<string> treatmentNames = new ObservableCollection<string>();
+        private ObservableCollection<Breakfast> breakfastss = new ObservableCollection<Breakfast>();
+        private ObservableCollection<Event> events = new ObservableCollection<Event>();
+        private ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
+        private ObservableCollection<Room> rooms = new ObservableCollection<Room>();
+        private ObservableCollection<Meal> meals = new ObservableCollection<Meal>();
+        private ObservableCollection<Treatment> treatments = new ObservableCollection<Treatment>();
         private ObservableCollection<Booking> bookings = new ObservableCollection<Booking>();
+        private ObservableCollection<Customer> customers = new ObservableCollection<Customer>();
 
-        private ObservableCollection<string> mealListBox = new ObservableCollection<string>();
+        private ObservableCollection<Meal> mealListBox = new ObservableCollection<Meal>();
+        private ObservableCollection<Room> roomsListBox = new ObservableCollection<Room>();
 
-        private string selectedRoomComboBox;
-        private string selectedRoomListBox;
+        private ObservableCollection<string> methodOfPayment = new ObservableCollection<string>();
+
+        private Room selectedRoomComboBox;
+        private Room selectedRoomListBox;
         private string selectedMealComboBox;
         private string selectedMealListBox;
         private string selectedTreatmentComboBox;
         private string selectedTreatmentListBox;
+        private Employee selectedEmployeeComboBox;
 
         private Booking selectedBookig;
 
@@ -73,77 +79,42 @@ namespace hotel.managment.system.UI.UserControls
             addMeal = new RelayCommand(Add_Treatment);
 
             model = new Booking();
+            SubEmployee subEmployee = new SubEmployee();
+            model.SubEmployee = subEmployee;
 
-            //Load all neccessary objects
-            ObservableCollection<Breakfast> breakfasts = breakFastService.GetAll();
-            foreach (Breakfast breakfast in breakfasts)
-            {
-                breakfastsNames.Add(breakfast.KindOfBreakfast);
-            }
+            methodOfPayment.Add("Karte");
+            methodOfPayment.Add("Bar");
 
-            ObservableCollection<Event> events = eventService.GetAll();
-            foreach (Event e in events)
-            {
-                eventNames.Add(e.EventName + " " + e.DiscountValue.ToString());
-            }
-
-            ObservableCollection<Employee> employees = employeeService.GetAll();
-            foreach (Employee employee in employees)
-            {
-                employeeNames.Add(employee.Name + " " + employee.Surename.ToString());
-            }
-
-            ObservableCollection<Customer> customers = customerService.GetAll();
-            foreach (Customer customer in customers)
-            {
-                customerNames.Add(customer.CustomerID + " " + customer.Name + " " + customer.Surname.ToString());
-            }
-
-            ObservableCollection<Room> rooms = roomService.GetAll();
-            foreach (Room r in rooms)
-            {
-                roomNames.Add(r.RoomID + " " + r.RoomName);
-            }
-
-            ObservableCollection<Meal> meals = mealService.GetAll();
-            foreach (Meal m in meals)
-            {
-                mealNames.Add(m.MealID + " " + m.Name);
-                mealListBox.Add(m.MealID + " " + m.Name);
-            }
-
-            ObservableCollection<Treatment> treatments = treatmentService.GetAll();
-            foreach (Treatment t in treatments)
-            {
-                treatmentNames.Add(t.TreatmentID + " " + t.TreatmentName);
-            }
-
+            //Load all neccessary objects                   
             bookings = bookingService.GetAll();
-            
+            customers = customerService.GetAll();
+            treatments = treatmentService.GetAll();
+            rooms = roomService.GetAll();
+            meals = mealService.GetAll();
+            employees = employeeService.GetAll();
+            events = eventService.GetAll();
+            breakfastss = breakfastService.GetAll();
+
+            if (model.BookingID != 0)
+            {
+                
+            }
         }
 
         private void Add_Room()
         {
-            ObservableCollection<Room> rooms = roomService.GetAll();
-            foreach (Room room in rooms)
-            {
-                if (room.RoomName == selectedRoomComboBox)
-                {
-                    model.Room.Rooms.Add(room);
-                }
-            }
+            SubRoom r = new SubRoom();
+            r.Rooms.Add(selectedRoomComboBox);
+            r.AmountPrice += selectedRoomComboBox.Price;
+            model.Room = r;
+            model.Amount += selectedRoomComboBox.Price;
+            roomsListBox.Add(selectedRoomComboBox);
+            selectedRoomComboBox = null;
         }
 
         private void Remove_Room()
         {
-            ObservableCollection<Room> rooms = roomService.GetAll();
-            foreach (Room room in rooms)
-            {
-                if (room.RoomName == selectedRoomComboBox)
-                {
-                    model.Room.Rooms.Remove(room);
-                }
-            }
+            model.Room.Rooms.Remove(selectedRoomListBox);
         }
 
         private void Add_Treatment()
@@ -204,50 +175,58 @@ namespace hotel.managment.system.UI.UserControls
         private void DeleteCommand() 
         {
             //Delete...
-            bookingService.Delete(selectedBookig);
+            //bookingService.Delete(selectedBookig);
+            MessageBox.Show(SelectedBooking.BookingID.ToString());
         }
         private void EditCommand()
         {
             //Edit...
-            BookingEdit be = new BookingEdit(SelectedBooking);
-            be.ShowDialog();
+            //BookingEdit be = new BookingEdit(SelectedBooking);
+            //be.ShowDialog();
+            model = SelectedBooking;
         }
         private void SaveCommand()
         {
-            MessageBox.Show("Test");
 
-            /**
             if (model.Room == null)
             {
                 MessageBox.Show("Sie müsssen ein Zimmer hinterlegen");
             }
             else
             {
-                //Booking objeect is getting saved
+                if (model.SubEmployee.Employee == null)
+                {
+                    SubEmployee subEmployee = new SubEmployee();
+                    subEmployee.Employee = loggedInEmployee;
+                    subEmployee.Date = DateTime.Now;
+                }
                 bookingService.Save(model);
-            }
-            **/
+            }         
         }
+
         public Booking SelectedBooking { get => selectedBookig; set => selectedBookig = value; }
         public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
         public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
         public string SelectedTreatmentComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
         public string SelectedTreatmentListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
-        public string SelectedRoomComboBox { get => selectedRoomComboBox; set => selectedRoomComboBox = value; }
-        public string SelectedRoomListBox { get => selectedRoomListBox; set => selectedRoomListBox = value; }
-        public ObservableCollection<string> MealNames { get => mealNames; }
-        public ObservableCollection<string> TreatmentNames { get => treatmentNames; }
-        public ObservableCollection<string> RoomNames { get => roomNames; }
-        public ObservableCollection<string> EventNames { get => eventNames; }
-        public ObservableCollection<string> BreakfastsNames { get => breakfastsNames; }
-        public ObservableCollection<string> EmployeeNames { get => employeeNames; }
-        public ObservableCollection<string> CustomerNames { get => customerNames; }
+        public string SelectedMethodeOfPayment { get => model.MethodOfPayment; set => model.MethodOfPayment = value; }
+        public Employee SelectedEmployeeComboBox { get => selectedEmployeeComboBox; set => selectedEmployeeComboBox = value; }
+        public Room SelectedRoomComboBox { get => selectedRoomComboBox; set => selectedRoomComboBox = value; }
+        public Room SelectedRoomListBox { get => selectedRoomListBox; set => selectedRoomListBox = value; }
+        public ObservableCollection<Meal> Meals { get => meals; }
+        public ObservableCollection<Treatment> Treatments { get => treatments; }
+        public ObservableCollection<Room> Rooms { get => rooms; }
+        public ObservableCollection<Event> Events { get => events; }
+        public ObservableCollection<Breakfast> Breakfastss { get => breakfastss; }
+        public ObservableCollection<Employee> Employees { get => employees; }
+        public ObservableCollection<Customer> Customers { get => customers; }
         public ObservableCollection<Booking> Bookings { get => bookings; }
-        public int BookinID { get => model.BookingID; set => model.BookingID = value; }
+        public ObservableCollection<string> MethodeOfPayment { get => methodOfPayment; }
+        public int BookingID { get => model.BookingID; set => model.BookingID = value; }
         public string SelectedMethodOfPayment { get => model.MethodOfPayment; set => model.MethodOfPayment = value; }
         public Breakfast SelectedBreakfast { get => model.Breakfast; set => model.Breakfast = value; }
         public Event SelectedEvent { get => model.Event; set => model.Event = value; }
-        public double Amount { get => model.Amount; set => model.Amount = value; }
+        public double BookingAmount { get => model.Amount; set => model.Amount = value; }
         public bool Settel { get => model.settel; set => model.settel = value; }
         public DateTime DepatureTime { get => model.Depature; set => model.Depature = value; }
         public DateTime ArrivalTime { get => model.Arrival; set => model.Arrival = value; }

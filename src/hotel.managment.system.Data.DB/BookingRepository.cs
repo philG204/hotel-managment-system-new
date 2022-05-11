@@ -164,7 +164,20 @@ namespace hotel.managment.system.Data.DB
                         room.Positon = Convert.ToString(RDr.GetValue(5));
                         room.Floor = Convert.ToString(RDr.GetValue(6));
                         room.SizeOfShower = Convert.ToByte(RDr.GetValue(7));
-                        room.Equipment = Convert.ToString(RDr.GetValue(8));
+
+                        OleDbCommand Ecmd = new OleDbCommand("SELECT * FROM Buchung_Zimmer INNER JOIN Ausstatungsgegenstaende ON Buchung_Zimmer.Ausstatungsnummer = Ausstatungsgegenstaende.Ausstatungsnummer WHERE Zimmernummer = ?", connection);
+                        Ecmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
+
+                        var Edr = Ecmd.ExecuteReader();
+
+                        Edr.Read();
+
+                        Equipment equipment = new Equipment();
+                        equipment.EquipmentID = Convert.ToInt32(Edr.GetValue(0));
+                        equipment.EquipmentName = Convert.ToString(Edr.GetValue(1));
+
+                        room.equipment = equipment;
+
                         room.Lightning = Convert.ToString(RDr.GetValue(9));
                         room.Size = Convert.ToByte(RDr.GetValue(3));
 
@@ -174,11 +187,11 @@ namespace hotel.managment.system.Data.DB
                         var EDDr = cmd7.ExecuteReader();
                         EDDr.Read();
 
-                        Equipment equipment = new Equipment();
-                        equipment.EquipmentID = Convert.ToInt32(EDDr.GetValue(0));
-                        equipment.EquipmentName = Convert.ToString(EDDr.GetValue(1));
+                        Equipment equipmentRoom = new Equipment();
+                        equipmentRoom.EquipmentID = Convert.ToInt32(EDDr.GetValue(0));
+                        equipmentRoom.EquipmentName = Convert.ToString(EDDr.GetValue(1));
 
-                        room.equipment = equipment;
+                        room.equipment = equipmentRoom;
 
                         subRoom.Rooms.Add(room);
 
@@ -428,21 +441,22 @@ namespace hotel.managment.system.Data.DB
                         room.Positon = Convert.ToString(RDr.GetValue(5));
                         room.Floor = Convert.ToString(RDr.GetValue(6));
                         room.SizeOfShower = Convert.ToByte(RDr.GetValue(7));
-                        room.Equipment = Convert.ToString(RDr.GetValue(8));
-                        room.Lightning = Convert.ToString(RDr.GetValue(9));
-                        room.Size = Convert.ToByte(RDr.GetValue(3));
 
-                        OleDbCommand cmd7 = new OleDbCommand("SELECT * FROM `Ausstatungsgegenstaende` INNER JOIN `Buchung_Zimmer` ON Ausstatungsgegenstaende.Ausstatungsnummer = Buchung_Zimmer.Ausstatungsnummer WHERE `Buchungsnummer` = ?", connection);
-                        cmd7.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
+                        OleDbCommand Ecmd = new OleDbCommand("SELECT * FROM Buchung_Zimmer INNER JOIN Ausstatungsgegenstaende ON Buchung_Zimmer.Ausstatungsnummer = Ausstatungsgegenstaende.Ausstatungsnummer WHERE Buchungsnummer = ?", connection);
+                        Ecmd.Parameters.Add(new OleDbParameter { Value = dr.GetValue(0) });
 
-                        var EDDr = cmd7.ExecuteReader();
-                        EDDr.Read();
+                        var Edr = Ecmd.ExecuteReader();
+
+                        Edr.Read();
 
                         Equipment equipment = new Equipment();
-                        equipment.EquipmentID = Convert.ToInt32(EDDr.GetValue(0));
-                        equipment.EquipmentName = Convert.ToString(EDDr.GetValue(1));
+                        equipment.EquipmentID = Convert.ToInt32(Edr.GetValue(0));
+                        equipment.EquipmentName = Convert.ToString(Edr.GetValue(1));
 
                         room.equipment = equipment;
+
+                        room.Lightning = Convert.ToString(RDr.GetValue(9));
+                        room.Size = Convert.ToByte(RDr.GetValue(3));
 
                         subRoom.Rooms.Add(room);
 
