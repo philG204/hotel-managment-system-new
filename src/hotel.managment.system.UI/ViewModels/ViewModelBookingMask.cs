@@ -52,15 +52,16 @@ namespace hotel.managment.system.UI.UserControls
 
         private ObservableCollection<Meal> mealListBox = new ObservableCollection<Meal>();
         private ObservableCollection<Room> roomsListBox = new ObservableCollection<Room>();
+        private ObservableCollection<Treatment> treatmentListBox = new ObservableCollection<Treatment>();
 
         private ObservableCollection<string> methodOfPayment = new ObservableCollection<string>();
 
         private Room selectedRoomComboBox;
         private Room selectedRoomListBox;
-        private string selectedMealComboBox;
+        private Meal selectedMealComboBox;
         private string selectedMealListBox;
-        private string selectedTreatmentComboBox;
-        private string selectedTreatmentListBox;
+        private Treatment selectedTreatmentComboBox;
+        private Treatment selectedTreatmentListBox;
         private Employee selectedEmployeeComboBox;
 
         private Booking selectedBookig;
@@ -95,10 +96,12 @@ namespace hotel.managment.system.UI.UserControls
             events = eventService.GetAll();
             breakfastss = breakfastService.GetAll();
 
+            /**
             if (model.BookingID != 0)
             {
                 
             }
+            **/
         }
 
         private void Add_Room()
@@ -114,57 +117,47 @@ namespace hotel.managment.system.UI.UserControls
 
         private void Remove_Room()
         {
+            model.Room.AmountPrice -= selectedRoomComboBox.Price;
+            model.Amount -= selectedRoomComboBox.Price;
             model.Room.Rooms.Remove(selectedRoomListBox);
         }
 
         private void Add_Treatment()
         {
-            ObservableCollection<Treatment> treatments = treatmentService.GetAll();
-            foreach (Treatment treatment in treatments)
-            {
-                if (treatment.TreatmentName == selectedTreatmentComboBox)
-                {
-                    model.TotalTreatmentCosts.Treatments.Add(treatment);
-                }
-            }
+            TotalTreatmentCosts totalTreatmentCost = new TotalTreatmentCosts();
+            totalTreatmentCost.Treatments.Add(selectedTreatmentComboBox);
+            totalTreatmentCost.AmountTreatmentCosts += selectedTreatmentComboBox.TreatmentAmount;
+            model.TotalTreatmentCosts = totalTreatmentCost;
+            model.Amount += selectedTreatmentComboBox.TreatmentAmount;
+            treatmentListBox.Add(selectedTreatmentComboBox);
+            selectedTreatmentComboBox = null;
+            
         }
 
         private void Remove_Treatment()
         {
-            ObservableCollection<Treatment> treatments = treatmentService.GetAll();
-            foreach (Treatment treatment in treatments)
-            {
-                if (treatment.TreatmentName == selectedTreatmentComboBox)
-                {
-                    model.TotalTreatmentCosts.Treatments.Remove(treatment);
-                }
-            }
+            model.TotalTreatmentCosts.AmountTreatmentCosts -= selectedTreatmentComboBox.TreatmentAmount;
+            model.Amount -= selectedTreatmentComboBox.TreatmentAmount;
+            model.TotalTreatmentCosts.Treatments.Remove(selectedTreatmentComboBox);
         }
         private void Add_Meal()
         {
-            
-            ObservableCollection<Meal> meals = mealService.GetAll();
-            foreach (Meal meal in meals)
-            {
-                if (meal.Name == selectedMealComboBox.Split(" ")[1])
-                {
-                    model.TotalMealCosts.Meals.Add(meal);
-                    //mealListBox.Add();
-                }
-            }
+            TotalMealCosts totalMealCost = new TotalMealCosts();
+            totalMealCost.Meals.Add(selectedMealComboBox);
+            totalMealCost.MealCost += selectedMealComboBox.Price;
+            model.TotalMealCosts = totalMealCost;
+            model.Amount += selectedMealComboBox.Price;
+            mealListBox.Add(selectedMealComboBox);
+            selectedMealComboBox = null;
+
         }
 
         private void Remove_Meal()
         {
-            ObservableCollection<Meal> meals = mealService.GetAll();
-            foreach (Meal meal in meals)
-            {
-                if (meal.Name == selectedMealComboBox.Split(" ")[1])
-                {
-                    model.TotalMealCosts.Meals.Remove(meal);
-                    //mealListBox.Add();
-                }
-            }
+            model.TotalMealCosts.MealCost -= selectedMealComboBox.Price;
+            model.Amount -= selectedMealComboBox.Price;
+            model.TotalMealCosts.Meals.Remove(selectedMealComboBox);
+          
         }
 
         
@@ -205,9 +198,9 @@ namespace hotel.managment.system.UI.UserControls
         }
 
         public Booking SelectedBooking { get => selectedBookig; set => selectedBookig = value; }
-        public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
+        public Meal SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
         public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
-        public string SelectedTreatmentComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
+        public Treatment SelectedTreatmentComboBox { get => selectedTreatmentComboBox; set => selectedTreatmentComboBox = value; }
         public string SelectedTreatmentListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
         public string SelectedMethodeOfPayment { get => model.MethodOfPayment; set => model.MethodOfPayment = value; }
         public Employee SelectedEmployeeComboBox { get => selectedEmployeeComboBox; set => selectedEmployeeComboBox = value; }
