@@ -66,7 +66,7 @@ namespace hotel.managment.system.UI.UserControls
 
         private Booking selectedBookig;
 
-        public ViewModelBookingMask()
+        public ViewModelBookingMask(Employee employee)
         {
             goBack = new RelayCommand(GoBackCommand);
             save = new RelayCommand(SaveCommand);
@@ -76,10 +76,12 @@ namespace hotel.managment.system.UI.UserControls
             removeRoom = new RelayCommand(Remove_Room);
             removeMeal = new RelayCommand(Remove_Meal);
             addMeal = new RelayCommand(Add_Meal);
-            removeMeal = new RelayCommand(Remove_Treatment);
-            addMeal = new RelayCommand(Add_Treatment);
+            removeMeal = new RelayCommand(Remove_Meal);
+            addTreatment = new RelayCommand(Add_Treatment);
+            removeTreatment = new RelayCommand(Remove_Treatment);
 
             model = new Booking();
+            loggedInEmployee = employee;
             SubEmployee subEmployee = new SubEmployee();
             model.SubEmployee = subEmployee;
 
