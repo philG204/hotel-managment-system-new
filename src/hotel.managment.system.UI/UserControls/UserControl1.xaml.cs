@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hotel.managment.system.UI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace hotel.managment.system.UI.UserControls
         public UserControl1()
         {
             InitializeComponent();
+            ViewModelSelection vms = new ViewModelSelection();
+            this.DataContext = vms;
         }
     }
 }

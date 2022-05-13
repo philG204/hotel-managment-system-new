@@ -1,4 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using hotel.managment.system.UI.UserControls;
+using hotel.managment.system.UI.ViewModels;
+using hotel_managment_system.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,54 +16,14 @@ namespace hotel.managment.system.UI
 {
     public class ViewModelMainWindow
     {
-        RelayCommand _SelectingInvoive;
-        RelayCommand _ShowSelectingControlCommand;
-        private bool _IsUserControl1Collapsed = true;
-
-        //public RelayCommand 
-        public RelayCommand ShowUserControl1Command
+        private object _currentView;
+        
+        public ViewModelMainWindow()
         {
-            get
-            {
-                if (_ShowSelectingControlCommand == null)
-                {
-                    _ShowSelectingControlCommand = new RelayCommand(() => ChangeValue());
-                }
-                return _ShowSelectingControlCommand;
-            }
-            set
-            {
-                if (_ShowSelectingControlCommand == null)
-                {
-                    _ShowSelectingControlCommand = new RelayCommand(() => ChangeValue());
-                }
-                _ShowSelectingControlCommand = value;
-            }
+            ViewModelSelection Selection = new ViewModelSelection();
+            _currentView = Selection;
         }
 
-        public void ChangeValue()
-        {
-            if (_IsUserControl1Collapsed == false)
-            {
-                _IsUserControl1Collapsed = true;
-            }
-            else
-            {
-                _IsUserControl1Collapsed = false;
-            }
-        }
-
-        public bool IsSelectControlCollapsed
-        {
-            get
-            {
-                return _IsUserControl1Collapsed;
-            }
-
-            set
-            {
-                _IsUserControl1Collapsed = value;
-            }
-        }
+        public object CurrentView { get => _currentView; set => _currentView = value; }
     }
 }

@@ -37,9 +37,8 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <Grid Visibility="{Binding IsSelectControlCollapsed, Mode=OneWay, Converter={StaticResource BoolToVis}}">
-                <vsc:BookingMask />
-            </Grid>
+            <ContentControl Content="{Binding CurrentView, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
         </Grid>
     </Grid>
 </Window>

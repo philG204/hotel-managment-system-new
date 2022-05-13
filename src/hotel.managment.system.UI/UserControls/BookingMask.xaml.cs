@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hotel_managment_system.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,10 @@ namespace hotel.managment.system.UI.UserControls
     /// </summary>
     public partial class BookingMask : UserControl
     {
-        public BookingMask()
+        public BookingMask(Employee employee)
         {
             InitializeComponent();
-            ViewModelBookingMask vmbm = new ViewModelBookingMask();
+            ViewModelBookingMask vmbm = new ViewModelBookingMask(employee);
             this.DataContext = vmbm;
         }
     }
