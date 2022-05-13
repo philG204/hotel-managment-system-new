@@ -10,6 +10,9 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </Window.Resources>
+    <Window.DataContext>
+        <local:ViewModelMainWindow/>
+    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -25,15 +28,14 @@
                 <RowDefinition Height="200"/>
                 <RowDefinition Height="120"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="2" Content="Abbrechnung" Command="{Binding ShowUserControl1Command, Mode=TwoWay}" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
+            <Button Grid.Row="2" Content="Abbrechnung" Command="{Binding SelectionViewModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
             <Button Grid.Row="3" Content="Statistik" FontSize="25" BorderBrush="#FF3A306B" Background="#FF3A306B" Foreground="White"/>
-            <Button Grid.Row="4" Content="Stammdaten" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
+            <Button Grid.Row="4" Content="Stammdaten" Command="{Binding ReferenceDataButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontSize="25" Background="#FF251C52" Foreground="White" BorderBrush="#FF251C52"/>
             <Button Grid.Row="6" Content="Abmelden" FontSize="25" Background="#FF3A306B" BorderBrush="#FF3A306B" Foreground="White"/>
 
             <Grid Grid.Row="1">
                 <TextBlock Text="Mitarbeiter Name" Foreground="White" FontSize="27" Margin="0,0,0,0" Padding="0,48,0,0"/>
             </Grid>
-
         </Grid>
 
         <Grid Grid.Column="1">
