@@ -1,0 +1,29 @@
+﻿<Application x:Class="hotel.managment.system.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:hotel.managment.system.UI"
+             xmlns:viewModel="clr-namespace:hotel.managment.system.UI.MVVM.ViewModel"
+             xmlns:view="clr-namespace:hotel.managment.system.UI.MVVM.View"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <DataTemplate DataType="{x:Type viewModel:ViewModelReceiptMask}">
+                <view:ReceiptMaskView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ViewModelBookingMask}">
+                <view:BookingMaskView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ViewModelEmployeeMask}">
+                <view:EmployeeMaskView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:ViewModelCustomerMask}">
+                <view:CustomerMaskView/>
+            </DataTemplate>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

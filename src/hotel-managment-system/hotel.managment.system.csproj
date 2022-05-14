@@ -5,4 +5,8 @@
     <RootNamespace>hotel_managment_system_v2</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Intersoft.Crosslight" Version="6.0.5000.975" />
+  </ItemGroup>
+
 </Project>
