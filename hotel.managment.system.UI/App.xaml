@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:hotel.managment.system.UI"
              xmlns:viewModel="clr-namespace:hotel.managment.system.UI.MVVM.ViewModel"
              xmlns:view="clr-namespace:hotel.managment.system.UI.MVVM.View"
-             StartupUri="MainWindow.xaml">
+             StartupUri="Login.xaml">
     <Application.Resources>
         <ResourceDictionary>
 

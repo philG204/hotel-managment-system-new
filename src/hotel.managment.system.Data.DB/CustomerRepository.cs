@@ -220,5 +220,29 @@ namespace hotel.managment.system.Data.DB
                 return false;
             }
         }
+
+        public ObservableCollection<string> GetCustomerIDs()
+        {
+            try
+            {
+                ObservableCollection<string> IDs = new ObservableCollection<string>();
+                OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
+                connection.Open();
+
+                OleDbCommand getIDs = new OleDbCommand("SELECT `Kundennummer` FROM `Kunde`", connection);
+
+                var drGetIDs = getIDs.ExecuteReader();
+                while (drGetIDs.Read())
+                {
+                    IDs.Add(drGetIDs.GetValue(0).ToString());
+                }
+
+                return IDs;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
     }
 }

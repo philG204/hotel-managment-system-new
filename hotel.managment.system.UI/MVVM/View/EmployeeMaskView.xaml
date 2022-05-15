@@ -24,6 +24,85 @@
                 <RowDefinition/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <TextBlock Text="Name: " Foreground="White" FontSize="48" Margin="125,25,0,0"/> 
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <TextBox Margin="0,50,0,50" Text="{Binding Name}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Nachname: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <TextBox Margin="0,50,0,50" Text="{Binding Surename}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <TextBlock Text="Straße: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <TextBox Margin="0,50,0,50" Text="{Binding Street}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <TextBlock Text="Hausnummer: " Foreground="White" FontSize="48" Margin="75,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <TextBox Margin="0,50,0,50" Text="{Binding Housenumber}"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <TextBlock Text="Postleitzahl: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <TextBox Margin="0,34,10,36" Text="{Binding PostalCode}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Stadt: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <TextBox Margin="0,32,10,38" Text="{Binding City}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <TextBlock Text="Telefonnummer: " Foreground="White" FontSize="48" Margin="50,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <TextBox Margin="0,34,10,36" Text="{Binding PhoneNumber}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <TextBlock Text="Email: " Foreground="White" FontSize="48" Margin="75,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <TextBox Margin="0,32,10,38" Text="{Binding Email}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="4">
+                    <TextBlock Text="Passwort: " Foreground="White" FontSize="48" Margin="75,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <TextBox Margin="0,32,10,38" Text="{Binding Password}"/>
+                </Grid>
+            </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -41,29 +120,8 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="2">
-                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding Save}" Content="Speichern" FontSize="36"/>
+                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding SaveCommand}" Content="Speichern" FontSize="36"/>
                 </Grid>
-            </Grid>
-            
-            <Grid Grid.Column="0" Grid.Row="0" Width="1720" Grid.ColumnSpan="2" Margin="0,0,0,54">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="235.02"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                </Grid>
-                
-                <Grid/>
             </Grid>
         </Grid>
 
@@ -72,19 +130,22 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedReceipt}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipts}">
+            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedEmployee, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Employees, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Löschen" Command="{Binding DeleteCommand}"/>
+                        <MenuItem Header="Bearbeiten" Command="{Binding EditCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ReceiptID}" />
-                    <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Surename}" />
-                    <DataGridTemplateColumn Header="Anreise">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding PaymentDate}" BorderThickness="0" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Rechnungsbetrag" Binding="{Binding CashAmount}" />
-                    <DataGridCheckBoxColumn Header="Rechnung beglichen" Binding="{Binding settel}" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding EmployeeID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Rechnungsbetrag" Binding="{Binding Surename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Rechnung beglichen" Binding="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Rechnung beglichen" Binding="{Binding Housenumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Rechnung beglichen" Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Rechnung beglichen" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Rechnung beglichen" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

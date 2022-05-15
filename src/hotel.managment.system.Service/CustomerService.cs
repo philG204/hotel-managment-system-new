@@ -23,5 +23,17 @@ namespace hotel.managment.system.Service
         public ObservableCollection<Customer> GetAll() => customerRepository.GetAll();  
 
         public bool Save(Customer obj) => customerRepository.Save(obj);
+        public bool CheckIDs(string toCheckId)
+        {
+            ObservableCollection<string> Ids = customerRepository.GetCustomerIDs();
+            foreach (string id in Ids)
+            {
+                if (id == toCheckId)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:viewModel="clr-namespace:hotel.managment.system.UI.MVVM.ViewModel"
              xmlns:local="clr-namespace:hotel.managment.system.UI.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
+    <UserControl.DataContext>
+        <viewModel:ViewModelCustomerMask/>
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -20,6 +24,238 @@
                 <RowDefinition/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <TextBlock Text="Name: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <TextBox Margin="0,19,1,19" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Nachname: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <TextBox Margin="0,19,0,19" Text="{Binding Surename, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <TextBlock Text="Straße: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <TextBox Margin="0,19,-1,19" Text="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <TextBlock Text="Hausnummer: " Foreground="White" FontSize="48" Margin="75,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <TextBox Margin="0,19,1,19" Text="{Binding Housenumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="4">
+                    <TextBlock Text="Postleitzahl: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <TextBox Margin="-1,19,0,19" Text="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="5">
+                    <TextBlock Text="Stadt: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="5">
+                    <TextBox Margin="0,19,0,19" Text="{Binding City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="6">
+                    <TextBlock Text="Telefonnummer: " Foreground="White" FontSize="48" Margin="50,10,0,5"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="7">
+                    <TextBox Margin="0,19,-1,19" Text="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <TextBlock Text="Email: " Foreground="White" FontSize="48" Margin="239,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0">
+                    <TextBox Margin="0,19,1,19" Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Geburtstag: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="1">
+                    <DatePicker Margin="0,19,1,19" Text="{Binding Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <DatePicker.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </DatePicker.RenderTransform>
+                    </DatePicker>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="2">
+                    <TextBlock Text="Geschlecht: " Foreground="White" FontSize="48" Margin="125,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="2">
+                    <TextBox Margin="0,19,2,19" Text="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="3">
+                    <TextBlock Text="Art Reisender: " Foreground="White" FontSize="48" Margin="75,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <TextBox Margin="0,19,1,19" Text="{Binding KindOfTravaler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="4">
+                    <TextBlock Text="Familienstand: " Foreground="White" FontSize="48" Margin="87,25,0,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="4">
+                    <TextBox Margin="0,19,2,19" Text="{Binding MaritalStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="5">
+                    <TextBlock Text="Bildungsstand: " Foreground="White" FontSize="48" Margin="85,25,27,0"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="5">
+                    <TextBox Margin="0,19,0,19" Text="{Binding EducationalStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <Grid Grid.Column="0" Grid.Row="6">
+                    <TextBlock Text="Berufung: " Foreground="White" FontSize="48" Margin="152,10,0,5"/>
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="7">
+                    <TextBox Margin="0,19,3,19" Text="{Binding Vocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+                </Grid>
+            </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -37,29 +273,8 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="2">
-                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding Save}" Content="Speichern" FontSize="36"/>
+                    <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding SaveCommand}" Content="Speichern" FontSize="36"/>
                 </Grid>
-            </Grid>
-
-            <Grid Grid.Column="0" Grid.Row="0" Width="1720" Grid.ColumnSpan="2" Margin="0,0,0,54">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="235.02"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                </Grid>
-
-                <Grid/>
             </Grid>
         </Grid>
 
@@ -68,19 +283,29 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedReceipt}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipts}">
+            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Customers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Löschen" Command="{Binding DeleteCommand}"/>
+                        <MenuItem Header="Bearbeiten" Command="{Binding EditCommand}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ReceiptID}" />
-                    <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Surename}" />
-                    <DataGridTemplateColumn Header="Anreise">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DatePicker SelectedDate="{Binding PaymentDate}" BorderThickness="0" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Rechnungsbetrag" Binding="{Binding CashAmount}" />
-                    <DataGridCheckBoxColumn Header="Rechnung beglichen" Binding="{Binding settel}" />
+                    <DataGridTextColumn Header="ID" Binding="{Binding CustomerID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Nachname" Binding="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Straße" Binding="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Hausnummer" Binding="{Binding HouseNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Postleitzahl" Binding="{Binding PostalCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Stadt" Binding="{Binding City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Telefonnummer" Binding="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Art Reisender" Binding="{Binding KindOfTravaler, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Geburtstag" Binding="{Binding Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Geschlecht" Binding="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Familienstand" Binding="{Binding MaritalStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Bildungsstand" Binding="{Binding EducationalStatus, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Berufung" Binding="{Binding Vocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

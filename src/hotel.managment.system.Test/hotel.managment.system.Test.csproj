@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\hotel-managment-system\hotel.managment.system.csproj" />
     <ProjectReference Include="..\hotel.managment.system.Service\hotel.managment.system.Service.csproj" />
   </ItemGroup>
 

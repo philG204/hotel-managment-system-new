@@ -129,10 +129,10 @@
                             <TextBlock Text="Kunde" FontSize="36" Foreground="White" HorizontalAlignment="Center"/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding EmployeeNames}"/>
+                            <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="Surename" SelectedItem="{Binding SelectedEmployee}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding CustomerNames}"/>
+                            <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}"/>
                         </Grid>
                     </Grid>
                     <Grid Grid.Column="2" Margin="129,0,0,0">
@@ -155,17 +155,22 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding RemoveRoom}"/>
+                                    <Button Content="Entfernen" Command="{Binding RemoveTreatment}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding RoomNames}" SelectedItem="{Binding SelectedRoomComboBox}"/>
+                                    <ComboBox ItemsSource="{Binding Treatments}" SelectedItem="{Binding SelectedTreatment}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding AddRoom}"/>
+                                    <Button Content="Hinzufügen" Command="{Binding AddTreatment}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="2">
+                                <Grid Grid.Column="0">
+                                    <ComboBox ItemsSource="{Binding Discounts}"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -190,17 +195,22 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding RemoveMeal}" />
+                                    <Button Content="Entfernen" Command="{Binding RemoveMeal}" />
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding MealNames}" SelectedItem="{Binding SelectedMealComboBox}"/>
+                                    <ComboBox ItemsSource="{Binding Meals}" SelectedItem="{Binding SelectedMeal}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding AddMeal}"/>
+                                    <Button Content="Hinzufügen" Command="{Binding AddMeal}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="2">
+                                <Grid Grid.Column="0">
+                                    <ComboBox ItemsSource="{Binding Discounts}"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -224,7 +234,7 @@
                             </Grid>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="1">
-                            <ComboBox/>
+                            <ComboBox ItemsSource="{Binding MethodeOfPayment}" SelectedItem="{Binding SelectedMethodOfPayment}"/>
                         </Grid>
                         <Grid Grid.Row="2" Grid.Column="0">
                             <TextBlock Text="Zahlungsart: " Foreground="White" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"/>
@@ -240,7 +250,13 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedReceipt}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Receipts}">
+            <DataGrid Background="#FF201A49" CanUserAddRows="False" SelectedItem="{Binding SelectedReceipt}" Grid.ColumnSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding Receipts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,70">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Löschen" Command="{Binding Delete}"/>
+                        <MenuItem Header="Bearbeiten" Command="{Binding Edit}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ReceiptID}" />
                     <DataGridTextColumn Header="Kunde" Binding="{Binding Customer.Surename}" />

@@ -613,12 +613,13 @@ namespace hotel.managment.system.Data.DB
 
                 if (edDr.HasRows == false)
                 {
-                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Buchung` (`Buchungsnummer`, `Kundennummer`, `Frühstücksnummer`, `Buchungsdatum`, `Zahlungsart`, `Anreise`, `Abreise`, `Buchungbeglichen`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", connection);
+                    OleDbCommand cmd = new OleDbCommand("INSERT INTO `Buchung` (`Buchungsnummer`, `Kundennummer`, `Frühstücksnummer`, `Buchungsdatum`, `Zahlungsart`, `Buchungsbetrag`, `Anreise`, `Abreise`, `Buchungbeglichen`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", connection);
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.BookingID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Customer.CustomerID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Breakfast.BreakfastID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.BookingDate });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.MethodOfPayment });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Amount });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Arrival });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Depature });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.settel });
@@ -648,7 +649,8 @@ namespace hotel.managment.system.Data.DB
                     {
                         foreach (Meal meal in obj.TotalMealCosts.Meals)
                         {
-                            OleDbCommand cmd2 = new OleDbCommand("INSERT INTO `Buchung_Hotel_Speisen` (`Speisennummer`, `Speisen_Buchungspreis`, `Speisen_Buchungrabatt`) VALUES (?, ?, ?)", connection);
+                            OleDbCommand cmd2 = new OleDbCommand("INSERT INTO `Buchung_Hotel_Speisen` (`Buchungsnummer`, `Speisennummer`, `Speisen_Buchungspreis`, `Speisen_Buchungrabatt`) VALUES (?, ?, ?, ?)", connection);
+                            cmd2.Parameters.Add(new OleDbParameter { Value = obj.BookingID });
                             cmd2.Parameters.Add(new OleDbParameter { Value = meal.MealID });
                             cmd2.Parameters.Add(new OleDbParameter { Value = obj.TotalMealCosts.MealCost });
                             cmd2.Parameters.Add(new OleDbParameter { Value = obj.TotalMealCosts.discount });
@@ -661,7 +663,8 @@ namespace hotel.managment.system.Data.DB
                     {
                         foreach (Treatment treatment in obj.TotalTreatmentCosts.Treatments)
                         {
-                            OleDbCommand cmd3 = new OleDbCommand("INSERT INTO `Buchung_Hotel_Behandlung` (`Behandlungsnummer`, `Behandlung_Buchungspreis`, `Behandlung_Buchungrabatt`) VALUES (?, ?, ?) ON EXIST UPDATE `Buchung_Zimmer` SET `Behandlungsnummer`= ?, `Behandlung_Buchungspreis`= ?, `Behandlung_Buchungrabatt`= ? WHERE `Buchungsnummer`= ?", connection);
+                            OleDbCommand cmd3 = new OleDbCommand("INSERT INTO `Buchung_Hotel_Behandlung` (`Buchungsnummer`, `Behandlungsnummer`, `Behandlung_Buchungspreis`, `Behandlung_Buchungrabatt`) VALUES (?, ?, ?, ?)", connection);
+                            cmd3.Parameters.Add(new OleDbParameter { Value = obj.BookingID });
                             cmd3.Parameters.Add(new OleDbParameter { Value = treatment.TreatmentID });
                             cmd3.Parameters.Add(new OleDbParameter { Value = obj.TotalTreatmentCosts.AmountTreatmentCosts });
                             cmd3.Parameters.Add(new OleDbParameter { Value = obj.TotalTreatmentCosts.Discount });
@@ -688,11 +691,12 @@ namespace hotel.managment.system.Data.DB
                 }
                 else
                 {
-                    OleDbCommand cmd = new OleDbCommand("UPDATE `Buchung` SET `Kundennummer`= ?, `Frühstücksnummer`= ?, `Buchungsdatum`= ?, `Zahlungsart`= ?, `Anreise`= ?, `Abreise`= ?, `Buchungbeglichen`= ? WHERE `Buchungsnummer`= ?", connection);
+                    OleDbCommand cmd = new OleDbCommand("UPDATE `Buchung` SET `Kundennummer`= ?, `Frühstücksnummer`= ?, `Buchungsdatum`= ?, `Zahlungsart`= ?, `Buchungsbetrag` = ?, `Anreise`= ?, `Abreise`= ?, `Buchungbeglichen`= ? WHERE `Buchungsnummer`= ?", connection);
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Customer.CustomerID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Breakfast.BreakfastID });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.BookingDate });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.MethodOfPayment });
+                    cmd.Parameters.Add(new OleDbParameter { Value = obj.Amount });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Arrival });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.Depature });
                     cmd.Parameters.Add(new OleDbParameter { Value = obj.settel });
@@ -764,6 +768,30 @@ namespace hotel.managment.system.Data.DB
             {
                 throw ex;
                 return false;
+            }
+        }
+
+        public ObservableCollection<string> GetBookingIDs()
+        {
+            try
+            {
+                ObservableCollection<string> IDs = new ObservableCollection<string>();
+                OleDbConnection connection = new OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0; Data Source = DB_Abrechnung.accdb");
+                connection.Open();
+
+                OleDbCommand getIDs = new OleDbCommand("SELECT `Buchungsnummer` FROM `Buchung`", connection);
+
+                var drGetIDs = getIDs.ExecuteReader();
+                while (drGetIDs.Read())
+                {
+                    IDs.Add(drGetIDs.GetValue(0).ToString());
+                }
+
+                return IDs;
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

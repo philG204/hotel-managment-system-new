@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hotel.managment.system.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,23 @@ namespace hotel.managment.system.UI
         public Login()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeService employeeService = new EmployeeService();
+
+            if (employeeService.CheckPassword(password.Password, name.Text))
+            {
+                MainWindow mw = new MainWindow();
+                mw.ShowDialog();    
+            }
+            else
+            {
+                password.Password = "";
+                name.Text = "";
+                MessageBox.Show("Passwort oder Name falsch");
+            }
         }
     }
 }

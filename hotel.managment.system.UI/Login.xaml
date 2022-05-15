@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:hotel.managment.system.UI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Login" Height="760" Width="450" Background="#FF1C1F55" >
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
+        <Grid Grid.Row="4">
+            <Button x:Name="Login1" Content="Login" Margin="75, 30, 75, 30" Click="Button_Click"/>
+        </Grid>
+        <Grid  Grid.Row="3">
+            <PasswordBox x:Name="password" Margin="75, 40, 75, 40"/>
+        </Grid>
+        <Grid  Grid.Row="2">
+            <TextBlock Text="Passwort" Foreground="#0000" Margin="0,0,0,74"/>
+            <TextBox x:Name="name" Margin="75, 50, 75, 30"/>
+        </Grid>
     </Grid>
 </Window>

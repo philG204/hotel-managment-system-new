@@ -39,6 +39,7 @@
                 <Grid Grid.Column="2">
                     <Button Background="#FF000C80" BorderBrush="#FF000C80" Foreground="White" Command="{Binding Save}" Content="Speichern" FontSize="36"/>
                 </Grid>
+                <TextBlock HorizontalAlignment="Left" Margin="10,-9,0,0" TextWrapping="Wrap" Text="Rabatt" VerticalAlignment="Top" Foreground="White" Height="49" Width="89" FontSize="24"/>
             </Grid>
             <Grid Grid.Column="1" Margin="573.4,0,0,0">
                 <Grid.RowDefinitions>
@@ -96,12 +97,13 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="430*"/>
+                        <ColumnDefinition Width="430*"/>
+                        <ColumnDefinition Width="51*"/>
+                        <ColumnDefinition Width="379*"/>
+                        <ColumnDefinition Width="430*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Margin="107,0,0,0">
+                    <Grid Grid.Column="1" Margin="107,139,0,-121">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="75"/>
@@ -121,7 +123,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding RemoveTreatment}" />
+                                    <Button Content="Entfernen" Command="{Binding RemoveTreatment}" />
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
@@ -131,11 +133,19 @@
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding AddTreatment}"/>
+                                    <Button Content="Hinzufügen" Command="{Binding AddTreatment}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="2">
+                                <Grid Grid.Column="0">
+                                    <ComboBox ItemsSource="{Binding Discounts}" DisplayMemberPath="DiscountValue" SelectedItem="{Binding SelectedDiscountTreatment}"/>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
+                    <TextBlock HorizontalAlignment="Left" Margin="124,69,0,0" TextWrapping="Wrap" Text="Behandlungen" VerticalAlignment="Top" Foreground="White" Height="49" Width="237" FontSize="36" Grid.Column="1"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="0,-26,0,0" TextWrapping="Wrap" Text="Rabatt" VerticalAlignment="Top" Foreground="White" Height="49" Width="89" FontSize="24" Grid.Column="2" Grid.ColumnSpan="2"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="10,-27,0,0" TextWrapping="Wrap" Text="Rabatt" VerticalAlignment="Top" Foreground="White" Height="49" Width="89" FontSize="24" Grid.Column="4"/>
                 </Grid>
                 <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
@@ -181,7 +191,7 @@
                             <DatePicker SelectedDate="{Binding DepatureTime}"/>
                         </Grid>
                     </Grid>
-                    <Grid Grid.Column="2" Margin="129,0,0,0">
+                    <Grid Grid.Column="2" Margin="129,66,0,-46">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="75"/>
@@ -201,7 +211,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding RemoveRoom}"/>
+                                    <Button Content="Entfernen" Command="{Binding RemoveRoom}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
@@ -214,9 +224,12 @@
                                     <Button Command="{Binding AddRoom}" Content="Hinzufügen"/>
                                 </Grid>
                             </Grid>
+                            <Grid Grid.Column="2">
+                                <ComboBox ItemsSource="{Binding Discounts}" DisplayMemberPath="DiscountValue" SelectedItem="{Binding SelectedDiscountRoom}"/>
+                            </Grid>
                         </Grid>
                     </Grid>
-                    <Grid Grid.Column="1" Margin="111,0,10,0">
+                    <Grid Grid.Column="1" Margin="111,66,10,-46">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="75"/>
@@ -236,7 +249,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="1">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding RemoveMeal}" />
+                                    <Button Content="Entfernen" Command="{Binding RemoveMeal}" />
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
@@ -246,10 +259,16 @@
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <Button Command="{Binding AddMeal}"/>
+                                    <Button Content="Hinzufügen" Command="{Binding AddMeal}"/>
+                                </Grid>
+                            </Grid>
+                            <Grid Grid.Row="0" Grid.Column="2">
+                                <Grid Grid.Column="0">
+                                    <ComboBox ItemsSource="{Binding Discounts}" DisplayMemberPath="DiscountValue" SelectedItem="{Binding SelectedDiscountMeal}"/>
                                 </Grid>
                             </Grid>
                         </Grid>
+
                     </Grid>
                     <Grid Grid.Column="3">
                         <Grid.ColumnDefinitions>
@@ -283,7 +302,10 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid/>
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" Margin="588,10,0,0" TextWrapping="Wrap" Text="Speisen" VerticalAlignment="Top" Foreground="White" Height="49" Width="215" FontSize="36"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="1011,10,0,0" TextWrapping="Wrap" Text="Zimmer" VerticalAlignment="Top" Foreground="White" Height="49" Width="215" FontSize="36"/>
+                </Grid>
             </Grid>
         </Grid>
 
@@ -292,7 +314,7 @@
                 <ColumnDefinition Width="6*"/>
                 <ColumnDefinition Width="37*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Background="#FF201A49" SelectedItem="{Binding SelectedBooking}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Bookings}">
+            <DataGrid Background="#FF201A49" CanUserAddRows="False" SelectedItem="{Binding SelectedBooking}" Grid.ColumnSpan="2" AutoGenerateColumns="false" ItemsSource="{Binding Bookings, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,70">
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Löschen" Command="{Binding Delete}"/>

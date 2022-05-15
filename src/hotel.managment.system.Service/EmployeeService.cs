@@ -23,19 +23,38 @@ namespace hotel.managment.system.Service
         public ObservableCollection<Employee> GetAll() => employeeRepositroy.GetAll();
 
         public bool Save(Employee obj) => employeeRepositroy.Save(obj);
-     
-        /**
-        public string EncryptPassword(string password, string name)
+        public bool CheckIDs(string toCheckId)
+        {
+            ObservableCollection<string> Ids = employeeRepositroy.GetEmployeeIDs();
+            foreach (string id in Ids)
+            {
+                if (id == toCheckId)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    
+        public bool CheckPassword(string password, string name)
         {
             try
             {
-                Employee employee = Get();
+                ObservableCollection<Employee> employees = employeeRepositroy.GetAll();
+
+                foreach (Employee employee in employees)
+                {
+                    if (employee.Name == name && employee.Password == password)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
             catch(Exception e)
             {
                 throw e;
             }
         }
-        **/
     }
 }

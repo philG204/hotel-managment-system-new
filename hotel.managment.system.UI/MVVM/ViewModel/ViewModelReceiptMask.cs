@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using hotel.managment.system.Service;
+using hotel.managment.system.UI.Core;
 using hotel_managment_system;
 using hotel_managment_system.Models;
 using System;
@@ -13,7 +14,7 @@ using System.Windows.Input;
 
 namespace hotel.managment.system.UI.MVVM.ViewModel
 {
-    public class ViewModelReceiptMask
+    public class ViewModelReceiptMask : ObservableObject
     {
         // Needed Services
         private ReceiptService receiptService = new ReceiptService();
@@ -22,11 +23,11 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         private CustomerService customerService = new CustomerService();
         private MealService mealService = new MealService();
         private TreatmentService treatmentService = new TreatmentService();
+        private DiscountService discountService = new DiscountService();
 
         private ICommand save;
         private ICommand delete;
         private ICommand edit;
-        private ICommand goBack;
         private ICommand addMeal;
         private ICommand removeMeal;
         private ICommand addTreatment;
@@ -34,113 +35,101 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
 
         private Receipt model;
 
-        private ObservableCollection<string> eventNames = new ObservableCollection<string>();
-        private ObservableCollection<string> employeeNames = new ObservableCollection<string>();
-        private ObservableCollection<string> customerNames = new ObservableCollection<string>();
-        private ObservableCollection<string> mealNames = new ObservableCollection<string>();
-        private ObservableCollection<string> treatmentNames = new ObservableCollection<string>();
+        private ObservableCollection<Event> events = new ObservableCollection<Event>();
+        private ObservableCollection<Employee> employees = new ObservableCollection<Employee>();
+        private ObservableCollection<Meal> meals = new ObservableCollection<Meal>();
+        private ObservableCollection<Treatment> treatments = new ObservableCollection<Treatment>();
         private ObservableCollection<Receipt> receipts = new ObservableCollection<Receipt>();
+        private ObservableCollection<Customer> customers = new ObservableCollection<Customer>();
+        private ObservableCollection<Discount> disounts = new ObservableCollection<Discount>();
 
-        private string selectedMealComboBox;
+        private ObservableCollection<Meal> mealListBox = new ObservableCollection<Meal>();
+        private ObservableCollection<Treatment> treatmentListBox = new ObservableCollection<Treatment>();
+
+        private ObservableCollection<string> methodOfPayment = new ObservableCollection<string>();
+
+        private Discount selectedDiscountCombobox;
+        private Meal selectedMeal;
         private string selectedMealListBox;
-        private string selectedTreatmentComboBox;
-        private string selectedTreatmentListBox;
+        private Treatment selectedTreatment;
+        private Treatment selectedTreatmentListBox;
+        private Employee selectedEmployeeComboBox;
 
         private Receipt selectedReceipt;
 
         public ViewModelReceiptMask()
         {
-            goBack = new RelayCommand(GoBackCommand);
             save = new RelayCommand(SaveCommand);
             delete = new RelayCommand(DeleteCommand);
-            edit = new RelayCommand(EditCommand);
+            edit = new RelayCommand(EditCommand);         
             removeMeal = new RelayCommand(Remove_Meal);
             addMeal = new RelayCommand(Add_Meal);
-            removeMeal = new RelayCommand(Remove_Treatment);
-            addMeal = new RelayCommand(Add_Treatment);
+            removeMeal = new RelayCommand(Remove_Meal);
+            addTreatment = new RelayCommand(Add_Treatment);
+            removeTreatment = new RelayCommand(Remove_Treatment);
 
             model = new Receipt();
+            SubEmployee subEmployee = new SubEmployee();
+            model.SubEmployee = subEmployee;
 
-            //Load all neccessary objects         
-            ObservableCollection<Event> events = eventService.GetAll();
-            foreach (Event e in events)
+            methodOfPayment.Add("Karte");
+            methodOfPayment.Add("Bar");
+
+            //Load all neccessary objects                   
+            receipts = receiptService.GetAll();
+            customers = customerService.GetAll();
+            treatments = treatmentService.GetAll();
+            meals = mealService.GetAll();
+            employees = employeeService.GetAll();
+            events = eventService.GetAll();
+            disounts = discountService.GetAll();
+            /**
+            if (model.BookingID != 0)
             {
-                eventNames.Add(e.EventName + " " + e.DiscountValue.ToString());
+                
             }
-
-            ObservableCollection<Employee> employees = employeeService.GetAll();
-            foreach (Employee employee in employees)
-            {
-                employeeNames.Add(employee.Name + " " + employee.Surename.ToString());
-            }
-
-            ObservableCollection<Customer> customers = customerService.GetAll();
-            foreach (Customer customer in customers)
-            {
-                customerNames.Add(customer.Name + " " + customer.Surname.ToString());
-            }
-
-            ObservableCollection<Meal> meals = mealService.GetAll();
-            foreach (Meal m in meals)
-            {
-                mealNames.Add(m.Name);
-            }
-
-            ObservableCollection<Treatment> treatments = treatmentService.GetAll();
-            foreach (Treatment t in treatments)
-            {
-                treatmentNames.Add(t.TreatmentName);
-            }
-
-            ObservableCollection<Receipt> receipts = receiptService.GetAll();
-        }
+            **/
+        }      
 
         private void Add_Treatment()
         {
-            ObservableCollection<Treatment> treatments = treatmentService.GetAll();
-            foreach (Treatment treatment in treatments)
-            {
-                if (treatment.TreatmentName == selectedTreatmentComboBox)
-                {
-                    model.TotalTreatmentCosts.Treatments.Add(treatment);
-                }
-            }
+            TotalTreatmentCosts totalTreatmentCost = new TotalTreatmentCosts();
+            totalTreatmentCost.Treatments.Add(selectedTreatment);
+            totalTreatmentCost.AmountTreatmentCosts += selectedTreatment.TreatmentAmount;
+            model.TotalTreatmentCosts = totalTreatmentCost;
+            model.CashAmount += selectedTreatment.TreatmentAmount;
+            treatmentListBox.Add(selectedTreatment);
+            selectedTreatment = null;
+
         }
 
         private void Remove_Treatment()
         {
-            ObservableCollection<Treatment> treatments = treatmentService.GetAll();
-            foreach (Treatment treatment in treatments)
-            {
-                if (treatment.TreatmentName == selectedTreatmentComboBox)
-                {
-                    model.TotalTreatmentCosts.Treatments.Remove(treatment);
-                }
-            }
+            model.TotalTreatmentCosts.AmountTreatmentCosts -= selectedTreatment.TreatmentAmount;
+            model.CashAmount -= selectedTreatment.TreatmentAmount;
+            model.TotalTreatmentCosts.Treatments.Remove(selectedTreatment);
         }
         private void Add_Meal()
         {
-            ObservableCollection<Meal> meals = mealService.GetAll();
-            foreach (Meal meal in meals)
-            {
-                if (meal.Name == selectedMealComboBox)
-                {
-                    model.TotalMealCosts.Meals.Add(meal);
-                }
-            }
+            TotalMealCosts totalMealCost = new TotalMealCosts();
+            totalMealCost.Meals.Add(selectedMeal);
+            totalMealCost.MealCost += selectedMeal.Price;
+            model.TotalMealCosts = totalMealCost;
+            model.CashAmount += selectedMeal.Price;
+            mealListBox.Add(selectedMeal);
+            selectedMeal = null;
+            OnPropertyChanged();
+
         }
 
         private void Remove_Meal()
         {
-            ObservableCollection<Meal> meals = mealService.GetAll();
-            foreach (Meal meal in meals)
-            {
-                if (meal.Name == selectedMealComboBox)
-                {
-                    model.TotalMealCosts.Meals.Remove(meal);
-                }
-            }
+            model.TotalMealCosts.MealCost -= selectedMeal.Price;
+            model.CashAmount -= selectedMeal.Price;
+            model.TotalMealCosts.Meals.Remove(selectedMeal);
+
         }
+
 
         private void GoBackCommand()
         {
@@ -149,47 +138,74 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         private void DeleteCommand()
         {
             //Delete...
+            receiptService.Delete(selectedReceipt);
+            MessageBox.Show(SelectedReceipt.ReceiptID.ToString());
         }
         private void EditCommand()
         {
             //Edit...
+            //BookingEdit be = new BookingEdit(SelectedBooking);
+            //be.ShowDialog();
+            model = SelectedReceipt;
         }
         private void SaveCommand()
         {
-            MessageBox.Show("Test");
 
-            /**
-            if (model.Room == null)
+            int id;
+            do
             {
-                Console.WriteLine("Sie müsssen ein Zimmer buchen");
+                Random rand = new Random();
+                id = rand.Next(1, 10000);
+            }
+            while (!receiptService.CheckIDs(id.ToString()));
+
+            model.ReceiptID = id;
+
+            DateTime dt = new DateTime();
+            model.SubEmployee.Date = dt.Date;
+
+            if (model.SubEmployee.Employee == null)
+            {
+                MessageBox.Show("Sie müssen ein Mitarbieter auswählen");
             }
             else
             {
-                //Booking objeect is getting saved
-                bookingService.Save(model);
+                if (model.Customer == null)
+                {
+                 MessageBox.Show("Sie müssen ein Kunden auswählen");
+                }
+                else
+                {
+                   receiptService.Save(model);
+                }
             }
-            **/
         }
-        public Receipt SelectedReceipt { get => selectedReceipt; set => selectedReceipt = value; }
-        public string SelectedMealComboBox { get => selectedMealComboBox; set => selectedMealComboBox = value; }
-        public string SelectedMealListBox { get => selectedMealListBox; set => selectedMealListBox = value; }
-        public ObservableCollection<Receipt> Receipts { get => receipts; }
-        public ObservableCollection<string> MealNames { get => mealNames; }
-        public ObservableCollection<string> TreatmentNames { get => treatmentNames; }
-        public ObservableCollection<string> EventNames { get => eventNames; }
-        public ObservableCollection<string> EmployeeNames { get => employeeNames; }
-        public ObservableCollection<string> CustomerNames { get => customerNames; }
-        public int ReceitpID { get => model.ReceiptID; set => model.ReceiptID = value; }
-        public string SelectedMethodOfPayment { get => model.MethodOfPayment; set => model.MethodOfPayment = value; }
-        public Event SelectedEvent { get => model.Event; set => model.Event = value; }
-        public double Amount { get => model.CashAmount; set => model.CashAmount = value; }
-        public bool Settel { get => model.settel; set => model.settel = value; }
-        public Employee SelectedEmployee { get => model.SubEmployee.Employee; set => model.SubEmployee.Employee = value; }
-        public Customer SelectedCustomer { get => model.Customer; set => model.Customer = value; }
+
+        public Receipt SelectedReceipt { get => selectedReceipt; set { selectedReceipt = value; OnPropertyChanged(); } }
+        public Meal SelectedMeal { get => selectedMeal; set { selectedMeal = value; OnPropertyChanged(); } }
+        public string SelectedMealListBox { get => selectedMealListBox; set { selectedMealListBox = value; OnPropertyChanged(); } }
+        public Treatment SelectedTreatment { get => selectedTreatment; set { selectedTreatment = value; OnPropertyChanged(); } }
+        public string SelectedTreatmentListBox { get => selectedMealListBox; set { selectedMealListBox = value; OnPropertyChanged(); } }
+        public string SelectedMethodeOfPayment { get => model.MethodOfPayment; set { model.MethodOfPayment = value; OnPropertyChanged(); } }
+        public Discount SelectedDiscount { get => selectedDiscountCombobox; set { selectedDiscountCombobox = value; OnPropertyChanged(); } }       
+        public ObservableCollection<Meal> Meals { get => meals; }
+        public ObservableCollection<Treatment> Treatments { get => treatments; }
+        public ObservableCollection<Event> Events { get => events; }
+        public ObservableCollection<Employee> Employees { get => employees; }
+        public ObservableCollection<Customer> Customers { get => customers; }
+        public ObservableCollection<Receipt> Receipts { get { return receipts; OnPropertyChanged(); } set { receipts = value; OnPropertyChanged(); } }
+        public ObservableCollection<Discount> Discounts { get => disounts; }
+        public ObservableCollection<string> MethodeOfPayment { get => methodOfPayment; }
+        public int ReceiptID { get => model.ReceiptID; set { model.ReceiptID = value; OnPropertyChanged(); } }
+        public string SelectedMethodOfPayment { get => model.MethodOfPayment; set { model.MethodOfPayment = value; OnPropertyChanged(); } }
+        public Event SelectedEvent { get => model.Event; set { model.Event = value; OnPropertyChanged(); } }
+        public double ReceiptAmount { get => model.CashAmount; set { model.CashAmount = value; this.OnPropertyChanged(); this.OnPropertyChanged(nameof(model.CashAmount)); } }
+        public bool Settel { get => model.settel; set { model.settel = value; OnPropertyChanged(); } }      
+        public Employee SelectedEmployee { get => model.SubEmployee.Employee; set { model.SubEmployee.Employee = value; OnPropertyChanged(); } }
+        public Customer SelectedCustomer { get => model.Customer; set { model.Customer = value; OnPropertyChanged(); } }
         public ICommand Save { get => save; set => save = value; }
         public ICommand Delete { get => delete; set => delete = value; }
-        public ICommand Edit { get => edit; set => edit = value; }
-        public ICommand GoBack { get => goBack; set => goBack = value; }
+        public ICommand Edit { get => edit; set => edit = value; }       
         public ICommand AddTreatment { get => addTreatment; set => addTreatment = value; }
         public ICommand RemoveTreatment { get => removeTreatment; set => removeTreatment = value; }
     }
