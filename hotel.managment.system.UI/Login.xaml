@@ -21,10 +21,12 @@
         </Grid>
         <Grid  Grid.Row="3">
             <PasswordBox x:Name="password" Margin="75, 40, 75, 40"/>
+            <TextBlock HorizontalAlignment="Left" Margin="75,6,0,0" TextWrapping="Wrap" Text="Passowort" VerticalAlignment="Top" Foreground="White" FontSize="22"/>
         </Grid>
         <Grid  Grid.Row="2">
             <TextBlock Text="Passwort" Foreground="#0000" Margin="0,0,0,74"/>
             <TextBox x:Name="name" Margin="75, 50, 75, 30"/>
+            <TextBlock HorizontalAlignment="Left" Margin="75,16,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Foreground="White" FontSize="22" Width="173"/>
         </Grid>
     </Grid>
 </Window>
