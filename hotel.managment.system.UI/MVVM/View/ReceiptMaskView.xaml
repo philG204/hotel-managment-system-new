@@ -61,7 +61,7 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Column="1" Grid.Row="0">
-                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding ReceiptAmount}" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="1">
                         <ComboBox ItemsSource="{Binding EventNames}"/>
@@ -70,7 +70,7 @@
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="3">
-                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding ReceiptAmountFinal}" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="0" Grid.Row="0">
                         <TextBlock Text="Gesamtgetrag:" Foreground="White" FontSize="18" Margin="0,0,0,0"/>
@@ -132,10 +132,10 @@
                             <ComboBox ItemsSource="{Binding Employees}" DisplayMemberPath="Surename" SelectedItem="{Binding SelectedEmployee}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="1">
-                            <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}"/>
+                            <ComboBox ItemsSource="{Binding Customers}" DisplayMemberPath="Surname" SelectedItem="{Binding SelectedCustomer}"/>
                         </Grid>
                     </Grid>
-                    <Grid Grid.Column="2" Margin="129,0,0,0">
+                    <Grid Grid.Column="2" Margin="129,164,0,-190">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="75"/>
@@ -160,7 +160,7 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding Treatments}" SelectedItem="{Binding SelectedTreatment}"/>
+                                    <ComboBox ItemsSource="{Binding Treatments}" DisplayMemberPath="TreatmentName" SelectedItem="{Binding SelectedTreatment}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
@@ -170,12 +170,12 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <ComboBox ItemsSource="{Binding Discounts}"/>
+                                    <ComboBox ItemsSource="{Binding Discounts}" SelectedItem="{Binding SelectedTreatmentDiscount}"/>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid Grid.Column="1" Margin="111,0,10,0">
+                    <Grid Grid.Column="1" Margin="111,164,10,-190">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="75"/>
@@ -200,7 +200,7 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="1">
                                 <Grid Grid.Column="1">
-                                    <ComboBox ItemsSource="{Binding Meals}" SelectedItem="{Binding SelectedMeal}"/>
+                                    <ComboBox ItemsSource="{Binding Meals}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMeal}"/>
                                 </Grid>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="2">
@@ -210,7 +210,7 @@
                             </Grid>
                             <Grid Grid.Row="0" Grid.Column="2">
                                 <Grid Grid.Column="0">
-                                    <ComboBox ItemsSource="{Binding Discounts}"/>
+                                    <ComboBox ItemsSource="{Binding Discounts}" SelectedItem="{Binding SelectedMealDiscount}"/>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -241,7 +241,10 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid/>
+                <Grid>
+                    <TextBlock HorizontalAlignment="Left" Margin="554,109,0,0" TextWrapping="Wrap" Text="Speisen" VerticalAlignment="Top" Foreground="White" FontSize="36"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="1000,109,0,0" TextWrapping="Wrap" Text="Behandlungen" VerticalAlignment="Top" Foreground="White" FontSize="36"/>
+                </Grid>
             </Grid>
         </Grid>
 

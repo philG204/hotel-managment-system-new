@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:hotel.managment.system.UI.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignHeight="1064.04" d:DesignWidth="1720" Background="#FF1C1F55" Width="1720" Height="1064.04">
+             d:DesignHeight="1064.04" Background="#FF1C1F55" Width="1720" Height="1064.04">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -71,7 +71,7 @@
                         <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="1" Grid.Row="3">
-                        <TextBlock Text="0" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding BookingAmountFinal, Mode=TwoWay}" Foreground="White" FontSize="18" HorizontalAlignment="Center"/>
                     </Grid>
                     <Grid Grid.Column="0" Grid.Row="0">
                         <TextBlock Text="Gesamtgetrag:" Foreground="White" FontSize="18" Margin="0,0,0,0"/>

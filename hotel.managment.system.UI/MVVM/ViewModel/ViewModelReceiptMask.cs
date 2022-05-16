@@ -54,6 +54,10 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         private Treatment selectedTreatment;
         private Treatment selectedTreatmentListBox;
         private Employee selectedEmployeeComboBox;
+        private double receiptAmount;
+
+        private Discount selectedMealDiscount;
+        private Discount selectedTreatmentDiscount;
 
         private Receipt selectedReceipt;
 
@@ -96,9 +100,11 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
             TotalTreatmentCosts totalTreatmentCost = new TotalTreatmentCosts();
             totalTreatmentCost.Treatments.Add(selectedTreatment);
             totalTreatmentCost.AmountTreatmentCosts += selectedTreatment.TreatmentAmount;
+            totalTreatmentCost.Discount = selectedTreatmentDiscount.DiscountValue;
             model.TotalTreatmentCosts = totalTreatmentCost;
             model.CashAmount += selectedTreatment.TreatmentAmount;
             treatmentListBox.Add(selectedTreatment);
+            receiptAmount += selectedTreatment.TreatmentAmount;
             selectedTreatment = null;
 
         }
@@ -108,15 +114,23 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
             model.TotalTreatmentCosts.AmountTreatmentCosts -= selectedTreatment.TreatmentAmount;
             model.CashAmount -= selectedTreatment.TreatmentAmount;
             model.TotalTreatmentCosts.Treatments.Remove(selectedTreatment);
+
+            if (model.TotalTreatmentCosts.Treatments.Count == 0)
+            {
+                model.TotalTreatmentCosts = null;
+            }
+            receiptAmount -= selectedTreatment.TreatmentAmount;
         }
         private void Add_Meal()
         {
             TotalMealCosts totalMealCost = new TotalMealCosts();
             totalMealCost.Meals.Add(selectedMeal);
             totalMealCost.MealCost += selectedMeal.Price;
+            totalMealCost.discount = selectedMealDiscount.DiscountValue;
             model.TotalMealCosts = totalMealCost;
             model.CashAmount += selectedMeal.Price;
             mealListBox.Add(selectedMeal);
+            receiptAmount += selectedMeal.Price;
             selectedMeal = null;
             OnPropertyChanged();
 
@@ -127,7 +141,12 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
             model.TotalMealCosts.MealCost -= selectedMeal.Price;
             model.CashAmount -= selectedMeal.Price;
             model.TotalMealCosts.Meals.Remove(selectedMeal);
-
+            
+            if (model.TotalMealCosts.Meals.Count == 0)
+            {
+                model.TotalMealCosts = null;
+            }
+            receiptAmount -= selectedMeal.Price;
         }
 
 
@@ -176,6 +195,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
                 }
                 else
                 {
+                   model.CashAmount += (model.CashAmount*0.19);
                    receiptService.Save(model);
                 }
             }
@@ -187,7 +207,8 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         public Treatment SelectedTreatment { get => selectedTreatment; set { selectedTreatment = value; OnPropertyChanged(); } }
         public string SelectedTreatmentListBox { get => selectedMealListBox; set { selectedMealListBox = value; OnPropertyChanged(); } }
         public string SelectedMethodeOfPayment { get => model.MethodOfPayment; set { model.MethodOfPayment = value; OnPropertyChanged(); } }
-        public Discount SelectedDiscount { get => selectedDiscountCombobox; set { selectedDiscountCombobox = value; OnPropertyChanged(); } }       
+        public Discount SelectedMealDiscount { get => selectedMealDiscount; set { selectedMealDiscount = value; OnPropertyChanged(); } }  
+        public Discount SelectedTreatmentDiscount { get => selectedTreatmentDiscount; set { selectedTreatmentDiscount = value; OnPropertyChanged(); } }
         public ObservableCollection<Meal> Meals { get => meals; }
         public ObservableCollection<Treatment> Treatments { get => treatments; }
         public ObservableCollection<Event> Events { get => events; }
@@ -199,7 +220,8 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         public int ReceiptID { get => model.ReceiptID; set { model.ReceiptID = value; OnPropertyChanged(); } }
         public string SelectedMethodOfPayment { get => model.MethodOfPayment; set { model.MethodOfPayment = value; OnPropertyChanged(); } }
         public Event SelectedEvent { get => model.Event; set { model.Event = value; OnPropertyChanged(); } }
-        public double ReceiptAmount { get => model.CashAmount; set { model.CashAmount = value; this.OnPropertyChanged(); this.OnPropertyChanged(nameof(model.CashAmount)); } }
+        public double ReceiptAmountFinal { get => model.CashAmount; set { model.CashAmount = value; this.OnPropertyChanged(); this.OnPropertyChanged(nameof(model.CashAmount)); } }
+        public double ReceiptAmount { get => receiptAmount; set { receiptAmount = value; this.OnPropertyChanged(); this.OnPropertyChanged(nameof(model.CashAmount)); } }
         public bool Settel { get => model.settel; set { model.settel = value; OnPropertyChanged(); } }      
         public Employee SelectedEmployee { get => model.SubEmployee.Employee; set { model.SubEmployee.Employee = value; OnPropertyChanged(); } }
         public Customer SelectedCustomer { get => model.Customer; set { model.Customer = value; OnPropertyChanged(); } }

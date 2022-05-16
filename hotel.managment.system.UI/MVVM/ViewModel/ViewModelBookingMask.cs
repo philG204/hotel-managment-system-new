@@ -64,6 +64,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         private Discount selectedDisountTreatment; 
         private Meal selectedMealComboBox;
         private string selectedMealListBox;
+        private double bookingAmount;
         private Treatment selectedTreatmentComboBox;
         private Treatment selectedTreatmentListBox;
         private Employee selectedEmployeeComboBox;
@@ -124,6 +125,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
                 model.Room = r;
                 model.Amount += selectedRoomComboBox.Price;
                 roomsListBox.Add(selectedRoomComboBox);
+                bookingAmount += selectedRoomComboBox.Price;
                 selectedRoomComboBox = null;
             }           
         }
@@ -133,6 +135,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
             model.Room.AmountPrice -= selectedRoomComboBox.Price;
             model.Amount -= selectedRoomComboBox.Price;
             model.Room.Rooms.Remove(selectedRoomListBox);
+            bookingAmount -= selectedRoomComboBox.Price;
         }
 
         private void Add_Treatment()
@@ -150,6 +153,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
                 model.TotalTreatmentCosts = totalTreatmentCost;
                 model.Amount += selectedTreatmentComboBox.TreatmentAmount;
                 treatmentListBox.Add(selectedTreatmentComboBox);
+                bookingAmount += selectedTreatmentComboBox.TreatmentAmount;
                 selectedTreatmentComboBox = null;
             }
         }
@@ -159,6 +163,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
             model.TotalTreatmentCosts.AmountTreatmentCosts -= selectedTreatmentComboBox.TreatmentAmount;
             model.Amount -= selectedTreatmentComboBox.TreatmentAmount;
             model.TotalTreatmentCosts.Treatments.Remove(selectedTreatmentComboBox);
+            bookingAmount -= selectedTreatmentComboBox.TreatmentAmount;
         }
         private void Add_Meal()
         {
@@ -175,6 +180,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
                 model.TotalMealCosts = totalMealCost;
                 model.Amount += selectedMealComboBox.Price;
                 mealListBox.Add(selectedMealComboBox);
+                bookingAmount += selectedMealComboBox.Price;
                 selectedMealComboBox = null;
                 OnPropertyChanged();
             }
@@ -185,6 +191,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
             model.TotalMealCosts.MealCost -= selectedMealComboBox.Price;
             model.Amount -= selectedMealComboBox.Price;
             model.TotalMealCosts.Meals.Remove(selectedMealComboBox);
+            bookingAmount -= selectedMealComboBox.Price;
 
         }
 
@@ -240,6 +247,7 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
                     }
                     else
                     {
+                        model.Amount += (model.Amount *= 0.19);
                         bookingService.Save(model);
                     }
                 }               
@@ -272,7 +280,8 @@ namespace hotel.managment.system.UI.MVVM.ViewModel
         public string SelectedMethodOfPayment { get => model.MethodOfPayment; set { model.MethodOfPayment = value; OnPropertyChanged(); } }
         public Breakfast SelectedBreakfast { get => model.Breakfast; set { model.Breakfast = value; OnPropertyChanged(); } }
         public Event SelectedEvent { get => model.Event; set { model.Event = value; OnPropertyChanged(); } }
-        public double BookingAmount { get => model.Amount; set { model.Amount = value; this.OnPropertyChanged(); this.OnPropertyChanged(nameof(model.Amount)); } }
+        public double BookingAmountFinal { get => model.Amount; set { model.Amount = value; this.OnPropertyChanged(); this.OnPropertyChanged(nameof(model.Amount)); } }
+        public double BookingAmount { get => bookingAmount; set => bookingAmount = value; }
         public bool Settel { get => model.settel; set { model.settel = value; OnPropertyChanged(); } }
         public DateTime DepatureTime { get => model.Depature; set { model.Depature = value; OnPropertyChanged(); } }
         public DateTime ArrivalTime { get => model.Arrival; set { model.Arrival = value; OnPropertyChanged(); } }
